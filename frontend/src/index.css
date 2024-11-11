@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&family=Yeseva+One&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* // <uniquifier>: Use a unique and descriptive class name
+// <weight>: Use a value from 100 to 900 */
+
+.work-sans-color{
+  font-family: "Work Sans", sans-serif;
+}
+
+.yeseva-one-regular {
+    font-family: "Yeseva One", serif;
+  }
+  

@@ -1,0 +1,25 @@
+{
+  "metadata": {
+    "query": "usirikapallymallesh@gmail.com",
+    "timestamp": "2024-11-04T11:57:25.987Z"
+  },
+  "data": {
+    "visitor": {
+      "google": {
+        "id": "104529924300267344744",
+        "services": {
+          "google_maps": "https://www.google.com/maps/contrib/104529924300267344744",
+          "google_calendar": "https://calendar.google.com/calendar/u/0/embed?src=usirikapallymallesh@gmail.com",
+          "google_plus_archive": "https://web.archive.org/web/*/plus.google.com/104529924300267344744*"
+        }
+      },
+      "skype": {
+        "accounts": [
+          {
+            "name": "mallesh yadav"
+          }
+        ]
+      }
+    }
+  }
+}
