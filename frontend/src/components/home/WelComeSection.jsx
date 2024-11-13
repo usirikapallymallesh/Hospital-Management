@@ -1,7 +1,8 @@
 import React from "react";
 import { IoCalendarNumberSharp } from "react-icons/io5";
 import { FaMoneyBillTrendUp } from "react-icons/fa6";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import HomeBg from "../../assets/images/homeBg.png";
 
 const WelComeSection = () => {
   return (
@@ -20,24 +21,34 @@ const WelComeSection = () => {
           <p>Payment Options</p>
         </div>
       </div>
-      
+
       <div className="text-center mt-20">
-        <h3 className="text-lg font-semibold text-blue-600">Welcome to Meddical</h3>
-        <h1 className="text-3xl md:text-4xl font-bold my-4">A Great Place to Receive Care</h1>
+        <h3 className="text-lg font-semibold text-[#159EEC] text-center uppercase work-sans-color mb-2">
+          Welcome to Meddical
+        </h3>
+        <h1 className="text-3xl md:text-4xl font-bold my-4 text-[#1F2B6C] yeseva-one-regular">
+          A Great Place to Receive Care
+        </h1>
         <p className="text-gray-700 mb-6 max-w-xl mx-auto">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque placerat scelerisque tortor ornare ornare. 
-          Convallis felis vitae tortor augue. Velit nascetur proin massa in. Consequat faucibus porttitor enim et.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
+          placerat scelerisque tortor ornare ornare. Convallis felis vitae
+          tortor augue. Velit nascetur proin massa in. Consequat faucibus
+          porttitor enim et.
         </p>
-        <Link 
-          to="/book" 
+        <Link
+          to="/book"
           className="bg-blue-500 text-white font-semibold py-3 px-6 rounded-lg shadow-lg transition duration-300 hover:bg-blue-600"
         >
-          Book an Appointment
+          Learn More
         </Link>
       </div>
 
-      <div className="mt-10 flex justify-center">
-        <img src="https://imgs.search.brave.com/GpWsvL2IhtPggsMPHLUDhpVCbt7WfpPNkD0sTO9irb4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zdGF0/aWMuZ2V0dHlpbWFn/ZXMuY29tL2Rpc3Bs/YXktc2V0cy9jcmVh/dGl2ZS1sYW5kaW5n/L2Nhcm91c2VsLzg2/ZHRnZjVjMV9IUC1D/YXJvX0dlbi1BSS1Q/cmUtU2hvdC1Nb2Rz/X0Rlc2t0b3Bfc20z/LmpwZw" alt="Healthcare" className="rounded-lg shadow-lg max-w-full h-auto" />
+      <div className="mt-16 flex justify-center">
+        <img
+          src={HomeBg}
+          alt="Healthcare"
+          className="rounded-sm  w-[1020px] h-auto"
+        />
       </div>
     </div>
   );
