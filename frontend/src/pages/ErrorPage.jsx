@@ -9,7 +9,7 @@ const ErrorPage = () => {
     >
       <div className="max-w-lg mx-auto text-center bg-white bg-opacity-90 p-10 rounded-lg shadow-lg transform transition-all duration-300 ">
         <div className="text-9xl font-bold text-[#1F2B6C] mb-4 drop-shadow-md">
-          404
+          500
         </div>
         <h1 className="text-4xl font-bold text-gray-800 mb-6">
           Oops! Page Not Found
