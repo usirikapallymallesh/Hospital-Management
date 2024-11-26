@@ -2,7 +2,7 @@ import React from 'react';
 
 const BestCare = () => {
   return (
-    <div className="flex flex-col md:flex-row items-center bg-gray-100 py-12 lg:px-10 rounded-lg shadow-md">
+    <div className="flex flex-col md:flex-row items-center bg-gray-100 py-12 lg:px-[5.5rem] rounded-lg shadow-md">
       {/* Image Section */}
       <div className="md:w-1/2 mb-6 md:mb-0">
         <img 

@@ -22,6 +22,8 @@ const Patients = lazy(() => import("./pages/doctor/Patients"));
 const Settings = lazy(() => import("./pages/doctor/Settings"));
 const Schedules = lazy(() => import("./pages/doctor/Schedules"));
 
+// admin routes
+const AdminDashboard = lazy(() => import("./pages/admin/AdminDashboard"));
 const App = () => {
   return (
     <Router>
@@ -39,8 +41,9 @@ const App = () => {
         <Route path="/news" element={<News />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         {/* doctors routes */}
+        <Route path="/doctor" element={<Dashboard />} />
         <Route path="/doctor/dashboard" element={<Dashboard />} />
-        <Route path="/doctor/appointment" element={<DoctorAppointment />} />
+        <Route path="/doctor/appointments" element={<DoctorAppointment />} />
         <Route path="/doctor/notifications" element={<Notifications />} />
         <Route path="/doctor/messages" element={<Messages />} />
         <Route path="/doctor/patients" element={<Patients />} />
@@ -48,7 +51,7 @@ const App = () => {
         <Route path="/doctor/schedules" element={<Schedules />} />
 
         {/* admin routes */}
-        <Route path="/admin/dashboard" element={<Dashboard />} />
+        <Route path="/admin/dashboard" element={<AdminDashboard />} />
         <Route path="/admin/settings" element={<Settings />} />
         <Route path="/admin/patients" element={<Patients />} />
         {/* <Route path="/admin/add-new-doctor" element={<Appointments />} /> */}

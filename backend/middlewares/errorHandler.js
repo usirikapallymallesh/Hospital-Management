@@ -3,7 +3,7 @@ const catchAsync = (fn) => {
     try {
       await fn(req, res, next);
     } catch (error) {
-      console.error("Error occurred");
+      console.error("Error occurred", error);
       next(error);
     }
 
@@ -25,7 +25,7 @@ const errorHandler = (err, req, res, next) => {
   }
   res.status(500).json({
     success: false,
-    message: "something went wrong",
+    message: err,
   });
 };
 
