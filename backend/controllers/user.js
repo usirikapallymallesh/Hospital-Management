@@ -7,36 +7,22 @@ const nodeMailer = require("nodemailer");
 const {
   welcomeMail,
   forgottenPasswordMail,
-} = require("../emails/emailTemplates");
-const addNewAdminFn = async (req, res) => {
+} = require("../services/emailTemplates");
+
+const uploadFile = require("../services/uploadService");
+
+const registerPatientApiFn = async (req, res) => {
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(req.body.password, salt);
   const user = {
     ...req.body,
     password: hashedPassword,
-    role: "ADMIN",
+    role: "PATIENT",
   };
-  await userModel.create(user); //1 way saving the data to db
+  await userModel.create(user);
   res.json({
     success: true,
-    message: "Admin successfully added",
-  });
-};
-
-const addNewDoctorFn = async (req, res) => {
-  const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(req.body.password, salt);
-  const user = {
-    ...req.body,
-    password: hashedPassword,
-    role: "DOCTOR",
-  };
-  const newUser = new userModel(user);
-  await newUser.save(); // 2 way saving the data to db
-
-  res.json({
-    success: true,
-    message: "Doctor successfully added",
+    message: "Patient successfully registered",
   });
 };
 
@@ -63,7 +49,92 @@ const loginUserApiFn = async (req, res) => {
     exp: new Date().getTime() + 24 * 3600 * 1000, // 11 day expiration
   };
   const token = jwt.sign(jwtPayload, process.env.JWT_SECRET_KEY);
+  res.cookie("jwt", token);
   res.json({ success: true, token });
+};
+
+const logoutUserFn = (req, res) => {
+  // Logout logic here
+  // Clear the token from the response header
+  res.clearCookie("token");
+  res.json({ success: true, message: "Logged out successfully" });
+};
+
+const updateUserApiFn = async (req, res) => {
+  const userId = req.user._id; // the logged in user id
+  const updatedUser = await userModel.findByIdAndUpdate(userId, req.body, {
+    new: true,
+  });
+  if (!updatedUser) {
+    return res.status(404).json({ success: false, message: "User not found" });
+  }
+  res.json({ success: true, message: "User updated successfully" });
+};
+
+const addNewAdminFn = async (req, res) => {
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(req.body.password, salt);
+  const user = {
+    ...req.body,
+    password: hashedPassword,
+    role: "ADMIN",
+  };
+  await userModel.create(user); //1 way saving the data to db
+  res.json({
+    success: true,
+    message: "Admin successfully added",
+  });
+};
+
+const addNewDoctorFn = async (req, res) => {
+  try {
+    // Handle file upload
+    uploadFile(req, res, async (error) => {
+      if (!req.body || !req.body.password) {
+        return res
+          .status(400)
+          .json({ success: false, message: "Missing required fields" });
+      }
+
+      // Hashing the password
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(req.body.password, salt);
+
+      // Create user object from form data
+      let user = {
+        ...req.body,
+        password: hashedPassword,
+        role: "DOCTOR",
+      };
+
+      if (error) {
+        return res.status(400).json({ success: false, message: error.message });
+      }
+
+      // Check if a file was uploaded
+      if (!req.file) {
+        return res
+          .status(400)
+          .json({ success: false, message: "No file uploaded" });
+      }
+
+      // Add file path to user object
+      user.docAvatar = req.file.path; // Add avatar path directly
+
+      // Save user to database
+      const newUser = new userModel(user);
+      await newUser.save();
+
+      // Send success response
+      res.json({
+        success: true,
+        message: "Doctor successfully added",
+        user: user, // Optionally return the saved user data
+      });
+    });
+  } catch (error) {
+    next(error);
+  }
 };
 
 const forgottenPassword = async (req, res) => {
@@ -143,12 +214,38 @@ const resetPassword = async (req, res) => {
     message: "Password reset successfully",
   });
 };
+
+const getAllDoctorsFn = async (req, res) => {
+  const doctors = await userModel.find({ role: "DOCTOR" });
+  res.json({ success: true, doctors });
+};
+
+const updateDoctor = async (req, res) => {
+  const { id } = req.params;
+  const updatedDoctor = await userModel.findByIdAndUpdate(id, req.body, {
+    new: true,
+  });
+  if (!updatedDoctor) {
+    return res
+      .status(404)
+      .json({ success: false, message: "Doctor not found" });
+  }
+  return res
+    .status(200)
+    .json({ success: true, message: "Doctor updated successfully." });
+};
+
 const userController = {
+  registerPatient: errorHandler.catchAsync(registerPatientApiFn),
   addNewAdmin: errorHandler.catchAsync(addNewAdminFn),
   addNewDoctor: errorHandler.catchAsync(addNewDoctorFn),
   loginUser: errorHandler.catchAsync(loginUserApiFn),
   forgottenPassword: errorHandler.catchAsync(forgottenPassword),
   resetPassword: errorHandler.catchAsync(resetPassword),
+  getAllDoctors: errorHandler.catchAsync(getAllDoctorsFn), // fetch list of doctors.
+  updateDoctor: errorHandler.catchAsync(updateDoctor), // update doctor's details.
+  logoutUser: errorHandler.catchAsync(logoutUserFn), // log out user
+  updateUser: errorHandler.catchAsync(updateUserApiFn), // update user's details.
 };
 
 module.exports = userController;

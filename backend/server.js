@@ -1,14 +1,18 @@
 const express = require("express");
-const mongoose = require("mongoose");
-const dotenv = require("dotenv").config();
 const userRouters = require("./routes/user");
 const appointmentRoutes = require("./routes/appointment");
 const errorHandler = require("./middlewares/errorHandler");
 const dbConnection = require("./database/db-connection");
-
+const cookieParser = require("cookie-parser");
+const passport = require("./middlewares/auth");
+var cors = require("cors");
 const app = express();
+// middlewares
 app.use(express.json());
-
+app.use(cookieParser());
+app.use(passport.initialize());
+app.use(cors());
+app.use(express.urlencoded({ extended: true }));
 // Connect to MongoDB
 dbConnection();
 

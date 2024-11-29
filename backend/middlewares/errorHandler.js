@@ -3,7 +3,7 @@ const catchAsync = (fn) => {
     try {
       await fn(req, res, next);
     } catch (error) {
-      console.error("Error occurred", error);
+      // console.error("Error occurred", error);
       next(error);
     }
 
@@ -20,7 +20,7 @@ const errorHandler = (err, req, res, next) => {
   if (err.code === 11000) {
     return res.status(400).json({
       success: false,
-      message: "Email exists already",
+      message: "User with email exists already",
     });
   }
   res.status(500).json({

@@ -42,7 +42,6 @@ const App = () => {
         <Route path="/reset-password" element={<ResetPassword />} />
         {/* doctors routes */}
         <Route path="/doctor" element={<Dashboard />} />
-        <Route path="/doctor/dashboard" element={<Dashboard />} />
         <Route path="/doctor/appointments" element={<DoctorAppointment />} />
         <Route path="/doctor/notifications" element={<Notifications />} />
         <Route path="/doctor/messages" element={<Messages />} />
@@ -51,7 +50,7 @@ const App = () => {
         <Route path="/doctor/schedules" element={<Schedules />} />
 
         {/* admin routes */}
-        <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/admin/settings" element={<Settings />} />
         <Route path="/admin/patients" element={<Patients />} />
         {/* <Route path="/admin/add-new-doctor" element={<Appointments />} /> */}

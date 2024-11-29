@@ -12,13 +12,15 @@ const UserModel = require("../models/user");
 const jwtSecretKey = process.env.JWT_SECRET_KEY;
 
 const opts = {};
-opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
+opts.jwtFromRequest = ExtractJwt.fromExtractors([
+  (req, res) => req.cookies.jwt,
+]);
 opts.secretOrKey = jwtSecretKey;
 
 const strategy = new JwtStrategy(opts, async function (jwt_payload, done) {
   const userId = jwt_payload.id;
   const user = await UserModel.findById(userId);
-  console.log(user);
+  // console.log(user);
   if (!user) {
     return done("Invalid user", false);
   }
