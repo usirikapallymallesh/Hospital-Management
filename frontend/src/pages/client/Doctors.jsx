@@ -17,7 +17,6 @@ const Doctors = () => {
           ImgUrl={doctorsPageBg}
         />
         <OurDoctors />
-        <OurDoctors />
         <Testimonial />
         <News />
         <Contact />

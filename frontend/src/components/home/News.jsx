@@ -43,7 +43,7 @@ const News = () => {
   ];
 
   return (
-    <div className="py-10 px-5 md:px-10 lg:px-20 bg-gray-50">
+    <div className="py-10 px-5 md:px-10 lg:px-20 bg-gray-50 pl-22">
       <h3 className="text-lg font-semibold  text-[#159EEC] text-center uppercase work-sans-color mb-2 ">Better information, Better health</h3>
       <h1 className="text-3xl md:text-4xl font-bold text-center mb-6 text-[#1F2B6C] yeseva-one-regular">News</h1>
 
@@ -51,7 +51,7 @@ const News = () => {
         {/* Create slides with three articles each */}
         {[...Array(Math.ceil(newsArticles.length / 3))].map((_, slideIndex) => (
           <div key={slideIndex} className="flex justify-center">
-            <div className="flex gap-4">
+            <div className="flex gap-6">
               {newsArticles.slice(slideIndex * 3, slideIndex * 3 + 3).map((article, index) => (
                 <div key={index} className="bg-white rounded-lg shadow-md p-4 max-w-xs text-center">
                   <img src={article.image} alt={article.title} className="w-full h-48 rounded-md object-cover mb-4" />

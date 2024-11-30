@@ -42,9 +42,9 @@ const FreeCheckUp = () => {
   ];
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-6 pl-20 pr-20 ">
       {checkupData.map((checkup) => (
-        <div key={checkup.id} className="bg-white rounded-lg shadow-lg overflow-hidden">
+        <div key={checkup.id} className="bg-white rounded-lg shadow-lg overflow-hidden hover:bg-[#1F2B6C]">
           <img src={checkup.image} alt={checkup.title} className="w-full h-40 object-cover" />
           <div className="p-4">
             <h2 className="text-xl font-semibold mb-2">{checkup.title}</h2>
