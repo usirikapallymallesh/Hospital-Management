@@ -1,123 +1,141 @@
-import React, { useState } from 'react';
-import { Form, Input, Button, Table, Modal, Select } from 'antd';
+import React, { useState } from "react";
+import { Button, Table, Select } from "antd";
+import { useNavigate } from "react-router-dom";
+import AdminSidebar from "../../components/admin/AdminSidebar";
+import AdminHeader from "../../components/admin/AdminHeader";
 
 const { Option } = Select;
 
 const ManagePatients = () => {
-  const [form] = Form.useForm();
   const [patients, setPatients] = useState([
-    { name: 'John Doe', age: 30, status: 'Pending' },
-    { name: 'Jane Smith', age: 25, status: 'Accepted' },
+    {
+      id: "1",
+      name: "John Doe",
+      age: 30,
+      condition: "Flu",
+      contact: "123-456-7890",
+      email: "john.doe@example.com",
+      status: "Pending",
+    },
+    {
+      id: "2",
+      name: "Jane Smith",
+      age: 25,
+      condition: "Cold",
+      contact: "987-654-3210",
+      email: "jane.smith@example.com",
+      status: "Accepted",
+    },
+    // Add more sample patients as needed
   ]);
-  const [editingPatient, setEditingPatient] = useState(null);
 
-  const onFinish = (values) => {
-    if (editingPatient) {
-      // Update existing patient
-      setPatients(patients.map(patient => (patient.name === editingPatient.name ? { ...patient, ...values } : patient)));
-      setEditingPatient(null);
-    } else {
-      // Add new patient
-      setPatients([...patients, { ...values, status: 'Pending' }]);
-    }
-    form.resetFields();
+  const navigate = useNavigate(); // Initialize navigate for navigation
+
+  const handleStatusChange = (value, patientId) => {
+    setPatients(
+      patients.map((patient) =>
+        patient.id === patientId ? { ...patient, status: value } : patient
+      )
+    );
   };
 
   const columns = [
     {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
     },
     {
-      title: 'Age',
-      dataIndex: 'age',
-      key: 'age',
+      title: "Age",
+      dataIndex: "age",
+      key: "age",
     },
     {
-      title: 'Status',
-      dataIndex: 'status',
-      key: 'status',
+      title: "Condition",
+      dataIndex: "condition",
+      key: "condition",
     },
     {
-      title: 'Action',
-      key: 'action',
+      title: "Contact",
+      dataIndex: "contact",
+      key: "contact",
+    },
+    {
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      render: (text, record) => (
+        <Select
+          defaultValue={text}
+          onChange={(value) => handleStatusChange(value, record.id)}
+          className="w-32"
+        >
+          <Option value="Pending">Pending</Option>
+          <Option value="Accepted">Accepted</Option>
+          <Option value="Rejected">Rejected</Option>
+          <Option value="Canceled">Canceled</Option>
+        </Select>
+      ),
+    },
+    {
+      title: "Action",
+      key: "action",
       render: (_, record) => (
-        <>
-          <Button type="link" onClick={() => editPatient(record)}>Edit</Button>
-          <Button type="link" onClick={() => deletePatient(record)}>Delete</Button>
-        </>
+        <Button type="link" onClick={() => editPatient(record)}>
+          Edit
+        </Button>
       ),
     },
   ];
 
   const editPatient = (patient) => {
-    form.setFieldsValue(patient);
-    setEditingPatient(patient);
+    // Redirect to EditPatient page with patient's ID as a parameter
+    navigate(`/admin/edit-patient/${patient.id}`);
   };
 
-  const deletePatient = (patient) => {
-    Modal.confirm({
-      title: 'Are you sure you want to delete this patient?',
-      onOk: () => {
-        setPatients(patients.filter(p => p.name !== patient.name));
-        if (editingPatient?.name === patient.name) {
-          setEditingPatient(null);
-          form.resetFields();
-        }
-      },
-    });
+  const handleAddNewPatient = () => {
+    navigate("/admin/add-patient"); // Redirect to the add new patient page
   };
 
   return (
-    <div className="p-6">
-      <h2 className="text-2xl font-bold mb-4">Manage Patients</h2>
-      
-      {/* Patient Editing Form */}
-      <Form form={form} layout="vertical" onFinish={onFinish}>
-        <Form.Item label="Name" name="name" rules={[{ required: true }]}>
-          <Input className="border border-gray-300 rounded-md p-2" />
-        </Form.Item>
-        <Form.Item label="Age" name="age" rules={[{ required: true }]}>
-          <Input type="number" className="border border-gray-300 rounded-md p-2" />
-        </Form.Item>
-        <Form.Item label="Status" name="status" rules={[{ required: true }]}>
-          <Select defaultValue="Pending" className="border border-gray-300 rounded-md">
-            <Option value="Pending">Pending</Option>
-            <Option value="Accepted">Accepted</Option>
-            <Option value="Rejected">Rejected</Option>
-          </Select>
-        </Form.Item>
-        <Button type="primary" htmlType="submit" className="bg-blue-500 text-white rounded-md p-2">
-          {editingPatient ? 'Update Patient' : 'Add Patient'}
-        </Button>
-        {editingPatient && (
-          <Button 
-            type="default" 
-            onClick={() => { 
-              setEditingPatient(null); 
-              form.resetFields(); 
-            }} 
-            className="ml-2 border border-gray-300 rounded-md p-2"
-          >
-            Cancel
-          </Button>
-        )}
-      </Form>
+    <div className="flex  h-screen bg-gray-50">
+      <AdminSidebar />
+      <div className="flex-grow ">
+        <section className=" w-[80vw] border-blue-900 h-10 px-0 mb-6">
+          <AdminHeader />
+        </section>
+        <section className="p-8 ">
+        <section className="flex justify-between py-4 items-center "> 
+          <h2 className="text-3xl font-semibold ">Manage Patients</h2>
 
-      {/* Patient List */}
-      <Table 
-        dataSource={patients} 
-        columns={columns} 
-        rowKey="name" 
-        className="mt-6"
-      />
-      
-      {/* Dashboard Metrics */}
-      <div className="mt-8">
-        <h3 className="text-xl font-semibold">Dashboard Metrics</h3>
-        <p>Total Patients Registered: {patients.length}</p>
-        {/* Add more metrics as needed */}
+          <Button type="primary" onClick={handleAddNewPatient} className="mb-4">
+            Add New Patient
+          </Button>
+          </section>
+
+          <Table
+            dataSource={patients}
+            columns={columns}
+            rowKey="id"
+            pagination={{ pageSize: 5 }}
+            bordered
+            className="shadow-lg rounded-lg"
+            style={{ marginTop: "20px" }}
+          />
+          {/* Dashboard Metrics */}
+          <div className="mt-10 bg-white p-4 rounded-lg shadow-md">
+            <h3 className="text-xl font-semibold">Dashboard Metrics</h3>
+            <p>
+              Total Patients Registered:{" "}
+              <span className="font-bold">{patients.length}</span>
+            </p>
+          </div>
+        </section>
       </div>
     </div>
   );

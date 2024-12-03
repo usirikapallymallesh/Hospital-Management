@@ -3,7 +3,9 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 const RegisterPage = lazy(() => import("./pages/RegisterPage"));
 const LoginPage = lazy(() => import("./pages/LoginPage"));
 import ErrorPage from "./pages/ErrorPage";
+const EditDoctor = lazy(() => import("./pages/admin/EditDoctor"));
 const AboutUs = lazy(() => import("./pages/client/AboutUs"));
+const EditPatient = lazy(() => import("./pages/admin/EditPatient"));
 const HomePage = lazy(() => import("./pages/client/HomePage"));
 const ForgotPassword = lazy(() => import("./pages/ForgotPasswordPage"));
 const Appointment = lazy(() => import("./pages/client/Appointment"));
@@ -12,7 +14,8 @@ const Services = lazy(() => import("./pages/client/Services"));
 const Doctors = lazy(() => import("./pages/client/Doctors"));
 const ResetPassword = lazy(() => import("./pages/ResetPassword"));
 const News = lazy(() => import("./pages/client/News"));
-// doctors comes from this.
+const ManageDoctors = lazy(() => import("./pages/admin/ManageDoctors"));
+const ManagePatients = lazy(() => import("./pages/admin/ManagePatients"));
 
 const Dashboard = lazy(() => import("./pages/doctor/Dashboard"));
 const DoctorAppointment = lazy(() => import("./pages/doctor/Appointment"));
@@ -51,6 +54,10 @@ const App = () => {
 
         {/* admin routes */}
         <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/admin/manage-doctors" element={<ManageDoctors />} />
+        <Route path="/admin/manage-patients" element={<ManagePatients />} />
+        <Route path="/admin/edit-doctor/:name" element={<EditDoctor />} />
+        <Route path="/admin/edit-patient/:id" element={<EditPatient />} />
         <Route path="/admin/settings" element={<Settings />} />
         <Route path="/admin/patients" element={<Patients />} />
         {/* <Route path="/admin/add-new-doctor" element={<Appointments />} /> */}

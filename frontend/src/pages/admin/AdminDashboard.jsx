@@ -1,16 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { Layout, Menu, Button, Card } from "antd";
-import {
-  UserAddOutlined,
-  UserOutlined,
-  BarChartOutlined,
-} from "@ant-design/icons";
+import React, { useState } from "react";
+import { Layout, Card, Row, Col, Table } from "antd";
 import { Bar, Line } from "react-chartjs-2";
 import { Chart, registerables } from "chart.js";
-import ManageDoctors from "./ManageDoctors"; // Import the ManageDoctors component
-import ManagePatients from "./ManagePatients"; // Import the ManagePatients component
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import AdminSidebar from "../../components/admin/AdminSidebar";
+import AdminHeader from "../../components/admin/AdminHeader";
 
 // Register Chart.js components
 Chart.register(...registerables);
@@ -42,79 +37,137 @@ const lineData = {
   ],
 };
 
-const { Header, Content, Sider } = Layout;
+const { Content } = Layout;
 
 const AdminDashboard = () => {
   const [selectedMenu, setSelectedMenu] = useState("dashboard");
-  const navigate = useNavigate();
-  const role = useSelector((state) => state.user.role); // Assuming auth.user is a Redux state
-  useEffect(() => {
-    if (role !== "ADMIN") {
-      navigate("/login"); // Redirect to login page if user is not admin. You can replace with your own logic.
-      return () => {}; // Return a cleanup function to prevent potential memory leaks when navigating away from the component.
-    }
-  }, []);
 
-  const renderContent = () => {
-    switch (selectedMenu) {
-      case "manageDoctors":
-        return <ManageDoctors />;
-      case "managePatients":
-        return <ManagePatients />;
-      case "dashboard":
-        return (
-          <div className="p-4">
-            <h2 className="text-2xl font-bold mb-4">Dashboard Overview</h2>
-            <Card title="Doctors Registered" className="mb-4">
-              <Bar data={barData} options={{ responsive: true }} />
-            </Card>
-            <Card title="Patients Appointments Over Weeks">
-              <Line data={lineData} options={{ responsive: true }} />
-            </Card>
-          </div>
-        );
-      default:
-        return <h2 className="text-xl">Welcome to the Admin Dashboard</h2>;
-    }
-  };
+  const navigate = useNavigate();
+
+  const role = useSelector((state) => state.user.role); // Assuming auth.user is a Redux state
 
   return (
-    <Layout style={{ minHeight: "100vh" }}>
-      <Sider className="bg-gray-800">
-        <div className="logo text-white text-lg p-4">Admin Panel</div>
-        <Menu
-          theme="dark"
-          mode="inline"
-          selectedKeys={[selectedMenu]}
-          items={[
-            {
-              key: "dashboard",
-              icon: <BarChartOutlined />,
-              label: "Dashboard",
-              onClick: () => setSelectedMenu("dashboard"),
-            },
-            {
-              key: "manageDoctors",
-              icon: <UserAddOutlined />,
-              label: "Manage Doctors",
-              onClick: () => setSelectedMenu("manageDoctors"),
-            },
-            {
-              key: "managePatients",
-              icon: <UserOutlined />,
-              label: "Manage Patients",
-              onClick: () => setSelectedMenu("managePatients"),
-            },
-          ]}
-        />
-      </Sider>
+    <Layout className="flex">
+      <AdminSidebar />
       <Layout>
-        <Header className="bg-white shadow">
-          <Button type="primary" style={{ marginLeft: "16px" }}>
-            Logout
-          </Button>
-        </Header>
-        <Content style={{ margin: "16px" }}>{renderContent()}</Content>
+        <AdminHeader />
+        <Content
+          style={{ marginTop: "64px", padding: "24px", overflowY: "auto" }}
+        >
+          <div className="p-4 bg-white rounded-lg shadow-md">
+            <h2 className="text-2xl font-bold mb-4">Dashboard Overview</h2>
+            <Row gutter={16}>
+              <Col xs={24} sm={12} md={6}>
+                <Card className="text-center bg-blue-100">
+                  <h3 className="text-3xl font-bold">30</h3>
+                  <p>Registered Doctors</p>
+                </Card>
+              </Col>
+              <Col xs={24} sm={12} md={6}>
+                <Card className="text-center bg-green-100">
+                  <h3 className="text-3xl font-bold">120</h3>
+                  <p>Registered Patients</p>
+                </Card>
+              </Col>
+              <Col xs={24} sm={12} md={6}>
+                <Card className="text-center bg-yellow-100">
+                  <h3 className="text-3xl font-bold">25</h3>
+                  <p>Currently Active</p>
+                </Card>
+              </Col>
+              <Col xs={24} sm={12} md={6}>
+                <Card className="text-center bg-red-100">
+                  <h3 className="text-3xl font-bold">15</h3>
+                  <p>Appointments Awaiting Confirmation</p>
+                </Card>
+              </Col>
+            </Row>
+
+            {/* Charts Section */}
+            <Row gutter={16} className="mt-6">
+              <Col xs={24} sm={24} md={12}>
+                <Card title="Doctors Registered" className="shadow-md">
+                  <Bar data={barData} options={{ responsive: true }} />
+                </Card>
+              </Col>
+              <Col xs={24} sm={24} md={12}>
+                <Card
+                  title="Patients Appointments Over Weeks"
+                  className="shadow-md"
+                >
+                  <Line data={lineData} options={{ responsive: true }} />
+                </Card>
+              </Col>
+            </Row>
+
+            {/* Display some doctors and patients in tables */}
+            <div className="mt-8">
+              <h2 className="text-xl font-semibold mb-4">Recent Doctors</h2>
+              {/* Replace with actual doctor data */}
+              <Table
+                dataSource={[
+                  {
+                    name: "Dr. Smith",
+                    specialization: "Cardiology",
+                    contact: "123-456-7890",
+                  },
+                  {
+                    name: "Dr. Jones",
+                    specialization: "Neurology",
+                    contact: "987-654-3210",
+                  },
+                ]}
+                columns={[
+                  { title: "Name", dataIndex: "name", key: "name" },
+                  {
+                    title: "Specialization",
+                    dataIndex: "specialization",
+                    key: "specialization",
+                  },
+                  {
+                    title: "Contact Number",
+                    dataIndex: "contact",
+                    key: "contact",
+                  },
+                ]}
+                rowKey="name"
+                pagination={{ pageSize: 5 }}
+                bordered
+              />
+
+              <h2 className="text-xl font-semibold mt-8 mb-4">
+                Recent Patients
+              </h2>
+              {/* Replace with actual patient data */}
+              <Table
+                dataSource={[
+                  { name: "John Doe", condition: "Flu", contact: "555-1234" },
+                  {
+                    name: "Jane Smith",
+                    condition: "Cold",
+                    contact: "555-5678",
+                  },
+                ]}
+                columns={[
+                  { title: "Name", dataIndex: "name", key: "name" },
+                  {
+                    title: "Condition",
+                    dataIndex: "condition",
+                    key: "condition",
+                  },
+                  {
+                    title: "Contact Number",
+                    dataIndex: "contact",
+                    key: "contact",
+                  },
+                ]}
+                rowKey="name"
+                pagination={{ pageSize: 5 }}
+                bordered
+              />
+            </div>
+          </div>
+        </Content>
       </Layout>
     </Layout>
   );

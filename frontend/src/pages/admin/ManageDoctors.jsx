@@ -1,131 +1,144 @@
-import React, { useState } from 'react';
-import { Form, Input, Button, Table, Modal, Upload } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
+import React, { useState } from "react";
+import { Button, Table, Select } from "antd";
+import { useNavigate } from "react-router-dom";
+import AdminSidebar from "../../components/admin/AdminSidebar";
+import AdminHeader from "../../components/admin/AdminHeader";
+const { Option } = Select;
 
 const ManageDoctors = () => {
-  const [form] = Form.useForm();
-  const [doctors, setDoctors] = useState([]);
-  const [editingDoctor, setEditingDoctor] = useState(null);
+  const [doctors, setDoctors] = useState([
+    {
+      id: "1",
+      name: "Dr. Smith",
+      specialization: "Cardiology",
+      description: "Heart specialist",
+      contact: "123-456-7890",
+      email: "smith@example.com",
+      activeHours: "9 AM - 5 PM",
+      status: "Active",
+    },
+    {
+      id: "2",
+      name: "Dr. Jones",
+      specialization: "Neurology",
+      description: "Brain specialist",
+      contact: "987-654-3210",
+      email: "jones@example.com",
+      activeHours: "10 AM - 6 PM",
+      status: "Inactive",
+    },
+    // Add more sample doctors as needed
+  ]);
 
-  const onFinish = (values) => {
-    if (editingDoctor) {
-      // Update existing doctor
-      setDoctors(doctors.map(doc => (doc.name === editingDoctor.name ? values : doc)));
-      setEditingDoctor(null);
-    } else {
-      // Add new doctor
-      setDoctors([...doctors, values]);
-    }
-    form.resetFields();
-  };
+  const navigate = useNavigate(); // Initialize navigate for navigation
 
   const columns = [
     {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
     },
     {
-      title: 'Specialization',
-      dataIndex: 'specialization',
-      key: 'specialization',
+      title: "Specialization",
+      dataIndex: "specialization",
+      key: "specialization",
     },
     {
-      title: 'Description',
-      dataIndex: 'description',
-      key: 'description',
+      title: "Description",
+      dataIndex: "description",
+      key: "description",
     },
     {
-      title: 'Image',
-      dataIndex: 'image',
-      key: 'image',
-      render: (text) => <img src={text} alt="Doctor" style={{ width: 50, height: 50 }} />,
+      title: "Contact Number",
+      dataIndex: "contact",
+      key: "contact",
     },
     {
-      title: 'Action',
-      key: 'action',
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+    },
+    {
+      title: "Active Hours",
+      dataIndex: "activeHours",
+      key: "activeHours",
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      render: (text, record) => (
+        <Select
+          defaultValue={text}
+          style={{ width: 120 }}
+          onChange={(value) => handleStatusChange(value, record.id)}
+        >
+          <Option value="Active">Active</Option>
+          <Option value="Inactive">Inactive</Option>
+          <Option value="On Leave">On Leave</Option>
+        </Select>
+      ),
+    },
+    {
+      title: "Action",
+      key: "action",
       render: (_, record) => (
-        <>
-          <Button type="link" onClick={() => editDoctor(record)}>Edit</Button>
-          <Button type="link" onClick={() => deleteDoctor(record)}>Delete</Button>
-        </>
+        <Button type="link" onClick={() => editDoctor(record)}>
+          Edit
+        </Button>
       ),
     },
   ];
 
-  const editDoctor = (doctor) => {
-    form.setFieldsValue(doctor);
-    setEditingDoctor(doctor);
+  const handleStatusChange = (value, id) => {
+    setDoctors(
+      doctors.map((doctor) =>
+        doctor.id === id ? { ...doctor, status: value } : doctor
+      )
+    );
   };
 
-  const deleteDoctor = (doctor) => {
-    Modal.confirm({
-      title: 'Are you sure you want to delete this doctor?',
-      onOk: () => {
-        setDoctors(doctors.filter(doc => doc.name !== doctor.name));
-        // Optionally handle self-deletion logic here
-        if (doctor.name === editingDoctor?.name) {
-          setEditingDoctor(null);
-          form.resetFields();
-        }
-      },
-    });
+  const editDoctor = (doctor) => {
+    // Redirect to EditDoctor page with doctor's ID as a parameter
+    navigate(`/admin/edit-doctor/${doctor.name}`);
+  };
+
+  const handleAddNewDoctor = () => {
+    navigate("/admin/add-doctor"); // Redirect to the add new doctor page
   };
 
   return (
-    <div>
-      <h2>Manage Doctors</h2>
-      <Form form={form} layout="vertical" onFinish={onFinish}>
-        <Form.Item label="Name" name="name" rules={[{ required: true }]}>
-          <Input />
-        </Form.Item>
-        <Form.Item label="Specialization" name="specialization" rules={[{ required: true }]}>
-          <Input />
-        </Form.Item>
-        <Form.Item label="Description" name="description">
-          <Input.TextArea rows={4} />
-        </Form.Item>
-        <Form.Item label="Image" name="image">
-          <Upload 
-            beforeUpload={(file) => {
-              // Convert file to base64 URL
-              const reader = new FileReader();
-              reader.onloadend = () => {
-                form.setFieldsValue({ image: reader.result });
-              };
-              reader.readAsDataURL(file);
-              return false; // Prevent automatic upload
-            }}
-          >
-            <Button icon={<UploadOutlined />}>Upload Image</Button>
-          </Upload>
-        </Form.Item>
-        <Form.Item label="Username" name="username" rules={[{ required: true }]}>
-          <Input />
-        </Form.Item>
-        <Form.Item label="Password" name="password" rules={[{ required: true }]}>
-          <Input.Password />
-        </Form.Item>
-        <Button type="primary" htmlType="submit">{editingDoctor ? 'Update Doctor' : 'Add Doctor'}</Button>
-        {editingDoctor && (
-          <Button type="default" onClick={() => { setEditingDoctor(null); form.resetFields(); }} style={{ marginLeft: '10px' }}>
-            Cancel
-          </Button>
-        )}
-      </Form>
+    <div className=" flex  h-screen bg-gray-50 ">
+      <AdminSidebar />
+      <div className="flex-grow ">
+        <section className=" w-[80vw] border-blue-900 h-10 px-0 mb-6">
+          <AdminHeader />
+        </section>
+        <section className="p-8 ">
+          <section className="flex justify-between py-4 items-center ">
+          <h2 className="text-3xl font-semibold ">Manage Doctors</h2>
 
-      <Table 
-        dataSource={doctors} 
-        columns={columns} 
-        rowKey="name" 
-        style={{ marginTop: '20px' }} 
-      />
-      
-      {/* Dashboard Metrics */}
-      <div style={{ marginTop: '40px' }}>
-        <h3>Dashboard Metrics</h3>
-        <p>Total Doctors Registered: {doctors.length}</p>
-        {/* Add more metrics as needed */}
+          <Button type="primary" onClick={handleAddNewDoctor} className="mb-4">
+            Add New Doctor
+          </Button>
+          </section>
+
+          <Table
+            dataSource={doctors}
+            columns={columns}
+            rowKey="id"
+            pagination={{ pageSize: 5 }}
+            style={{ marginTop: "20px" }}
+            bordered
+            className="shadow-md"
+          />
+
+          {/* Dashboard Metrics */}
+          <div style={{ marginTop: "40px" }}>
+            <h3 className="text-xl">Dashboard Metrics</h3>
+            <p>Total Doctors Registered: {doctors.length}</p>
+          </div>
+        </section>
       </div>
     </div>
   );
