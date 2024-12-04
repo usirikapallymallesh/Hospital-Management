@@ -1,95 +1,141 @@
-import React from 'react';
-import { Bar, Line } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, LineElement, PointElement } from 'chart.js';
-import { FaUser } from 'react-icons/fa';
-import Sidebar from './Sidebar'; // Importing the Sidebar component
+import React, { useState } from "react";
+import { Button, Table, Select } from "antd";
+import { useNavigate } from "react-router-dom";
+import DoctorSidebar from "../../components/doctor/DoctorSidebar";
+import DoctorHeader from "../../components/doctor/DoctorHeader";
 
-// Registering the necessary components for Chart.js
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, LineElement, PointElement);
+const { Option } = Select;
 
 const Patients = () => {
-  // Sample data for the charts
-  const barData = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June'],
-    datasets: [
-      {
-        label: 'Patients Registered',
-        data: [30, 50, 70, 40, 60, 80],
-        backgroundColor: 'rgba(75, 192, 192, 0.6)',
-        borderColor: 'rgba(75, 192, 192, 1)',
-        borderWidth: 1,
-      },
-    ],
+  const [patients, setPatients] = useState([
+    {
+      id: "1",
+      name: "John Doe",
+      age: 30,
+      condition: "Flu",
+      contact: "123-456-7890",
+      email: "john.doe@example.com",
+      status: "Pending",
+    },
+    {
+      id: "2",
+      name: "Jane Smith",
+      age: 25,
+      condition: "Cold",
+      contact: "987-654-3210",
+      email: "jane.smith@example.com",
+      status: "Accepted",
+    },
+    // Add more sample patients as needed
+  ]);
+
+  const navigate = useNavigate(); // Initialize navigate for navigation
+
+  const handleStatusChange = (value, patientId) => {
+    setPatients(
+      patients.map((patient) =>
+        patient.id === patientId ? { ...patient, status: value } : patient
+      )
+    );
   };
 
-  const lineData = {
-    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
-    datasets: [
-      {
-        label: 'Appointments',
-        data: [5, 10, 15, 20],
-        fill: false,
-        backgroundColor: 'rgba(153, 102, 255, 1)',
-        borderColor: 'rgba(153, 102, 255, 1)',
-      },
-    ],
+  const columns = [
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "Age",
+      dataIndex: "age",
+      key: "age",
+    },
+    {
+      title: "Condition",
+      dataIndex: "condition",
+      key: "condition",
+    },
+    {
+      title: "Contact",
+      dataIndex: "contact",
+      key: "contact",
+    },
+    {
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      render: (text, record) => (
+        <Select
+          defaultValue={text}
+          onChange={(value) => handleStatusChange(value, record.id)}
+          className="w-32"
+        >
+          <Option value="Pending">Pending</Option>
+          <Option value="Accepted">Accepted</Option>
+          <Option value="Rejected">Rejected</Option>
+          <Option value="Canceled">Canceled</Option>
+        </Select>
+      ),
+    },
+    {
+      title: "Action",
+      key: "action",
+      render: (_, record) => (
+        <Button type="link" onClick={() => editPatient(record)}>
+          Edit
+        </Button>
+      ),
+    },
+  ];
+
+  const editPatient = (patient) => {
+    // Redirect to EditPatient page with patient's ID as a parameter
+    navigate(`/admin/edit-patient/${patient.id}`);
   };
 
-  const handlePatientClick = (patient) => {
-    alert(`Showing details for ${patient}`);
-    // Implement logic to show more detailed information about the patient
+  const handleAddNewPatient = () => {
+    navigate("/admin/add-patient"); // Redirect to the add new patient page
   };
 
   return (
-    <div className="flex h-screen bg-gray-100">
-      {/* Sidebar */}
-      <Sidebar />
+    <div className="flex  h-screen bg-gray-50">
+      <DoctorSidebar />
+      <div className="flex-grow ">
+        <section className=" w-[80vw] border-blue-900 h-10 px-0 mb-6">
+          <DoctorHeader />
+        </section>
+        <section className="p-8 ">
+        <section className="flex justify-between py-4 items-center "> 
+          <h2 className="text-3xl font-semibold ">Manage Patient</h2>
 
-      {/* Main Content */}
-      <main className="flex-grow p-6 overflow-y-auto">
-        <h1 className="text-3xl font-bold text-blue-600 mb-4">Patient Data Overview</h1>
-        <p className="text-gray-700 mb-6">Manage your patients and appointments effectively.</p>
+          </section>
 
-        {/* Charts Section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          {/* Bar Chart */}
-          <div className="bg-white shadow-lg rounded-lg p-4 transition-transform transform hover:-translate-y-1">
-            <h3 className="font-semibold text-lg mb-2">Patients Registered</h3>
-            <Bar data={barData} options={{ responsive: true }} />
+          <Table
+            dataSource={patients}
+            columns={columns}
+            rowKey="id"
+            pagination={{ pageSize: 5 }}
+            bordered
+            className="shadow-lg rounded-lg"
+            style={{ marginTop: "20px" }}
+          />
+          {/* Dashboard Metrics */}
+          <div className="mt-10 bg-white p-4 rounded-lg shadow-md">
+            <h3 className="text-xl font-semibold">Dashboard Metrics</h3>
+            <p>
+              Total Patients Registered:{" "}
+              <span className="font-bold">{patients.length}</span>
+            </p>
           </div>
-
-          {/* Line Chart */}
-          <div className="bg-white shadow-lg rounded-lg p-4 transition-transform transform hover:-translate-y-1">
-            <h3 className="font-semibold text-lg mb-2">Appointments Over Weeks</h3>
-            <Line data={lineData} options={{ responsive: true }} />
-          </div>
-        </div>
-
-        {/* Patient List Section */}
-        <div className="bg-white shadow-lg rounded-lg p-6 mt-6">
-          <h1 className="text-xl font-bold text-center text-gray-800 mb-4">Patient List</h1>
-          <ul className="space-y-4">
-            {/* Sample patient data */}
-            {['John Doe', 'Jane Smith', 'Alice Johnson', 'Michael Brown'].map((patient) => (
-              <li 
-                key={patient} 
-                onClick={() => handlePatientClick(patient)} 
-                className="flex items-center bg-gray-50 border border-gray-200 rounded-lg p-4 cursor-pointer hover:bg-blue-100 transition-colors duration-300"
-              >
-                <FaUser className="text-blue-500 mr-3" />
-                <div>
-                  <h2 className="text-lg font-semibold text-gray-700">{patient}</h2>
-                  <p className="text-gray-600">Age: {Math.floor(Math.random() * 30) + 20}</p>
-                  <p className="text-gray-600">Condition: {['Healthy', 'Sick', 'Recovering'][Math.floor(Math.random() * 3)]}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-      </main>
+        </section>
+      </div>
     </div>
   );
-}
+};
 
 export default Patients;

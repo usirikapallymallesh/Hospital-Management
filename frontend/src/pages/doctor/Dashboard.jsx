@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Bar, Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -12,9 +12,10 @@ import {
   PointElement,
 } from "chart.js";
 import { FaUser } from "react-icons/fa";
-import Sidebar from "./Sidebar"; // Importing the Sidebar component
+import DoctorSidebar from "../../components/doctor/DoctorSidebar";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import DoctorHeader from "../../components/doctor/DoctorHeader";
 
 // Registering the necessary components for Chart.js
 ChartJS.register(
@@ -29,17 +30,8 @@ ChartJS.register(
 );
 
 const Dashboard = () => {
-  // Sample data for the charts
-  const navigate = useNavigate(); // Assuming useNavigate hook is used for navigation. You can replace with your own navigation logic.
-  const role = useSelector((state) => state.user.role); // Assuming auth.user is a Redux state
-  useEffect(() => {
-    if (role !== "DOCTOR") {
-      navigate("/login"); // Redirect to login page if user is not admin. You can replace with your own logic.
-      return () => {}; // Return a cleanup function to prevent potential memory leaks when navigating away from the component.
-    }
-    // Assuming the user's data is fetched from an API
-
-  }, []);
+  const navigate = useNavigate();
+  const role = useSelector((state) => state.user.role);
 
   const barData = {
     labels: ["January", "February", "March", "April", "May", "June"],
@@ -83,13 +75,12 @@ const Dashboard = () => {
   return (
     <div className="flex h-screen bg-gray-100">
       {/* Sidebar */}
-      <Sidebar />
+      <DoctorSidebar />
 
       {/* Main Content */}
-      <main className="flex-grow p-6 overflow-y-auto">
-        <h1 className="text-3xl font-bold text-blue-600 mb-4">
-          Dashboard Overview
-        </h1>
+      <main className="flex-grow overflow-y-auto">
+        <DoctorHeader />
+        <h1 className="text-3xl font-bold text-blue-600 mb-4">Dashboard Overview</h1>
         <p className="text-gray-700 mb-6">
           Manage your patients and appointments effectively.
         </p>
@@ -104,18 +95,14 @@ const Dashboard = () => {
 
           {/* Line Chart */}
           <div className="bg-white shadow-lg rounded-lg p-4 transition-transform transform hover:-translate-y-1">
-            <h3 className="font-semibold text-lg mb-2">
-              Appointments Over Weeks
-            </h3>
+            <h3 className="font-semibold text-lg mb-2">Appointments Over Weeks</h3>
             <Line data={lineData} options={{ responsive: true }} />
           </div>
         </div>
 
         {/* Upcoming Patients Section */}
         <div className="bg-white shadow-lg rounded-lg p-6 mt-6">
-          <h1 className="text-xl font-bold text-center text-gray-800 mb-4">
-            Upcoming Patients
-          </h1>
+          <h1 className="text-xl font-bold text-center text-gray-800 mb-4">Upcoming Patients</h1>
           <ul className="space-y-4">
             {upcomingPatients.map((patient) => (
               <li
@@ -125,9 +112,7 @@ const Dashboard = () => {
               >
                 <FaUser className="text-blue-500 mr-3" />
                 <div>
-                  <h2 className="text-lg font-semibold text-gray-700">
-                    {patient.name}
-                  </h2>
+                  <h2 className="text-lg font-semibold text-gray-700">{patient.name}</h2>
                   <p className="text-gray-600">
                     Appointment Time: {new Date(patient.time).toLocaleString()}
                   </p>

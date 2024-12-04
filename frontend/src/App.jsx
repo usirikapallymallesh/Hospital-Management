@@ -16,14 +16,15 @@ const ResetPassword = lazy(() => import("./pages/ResetPassword"));
 const News = lazy(() => import("./pages/client/News"));
 const ManageDoctors = lazy(() => import("./pages/admin/ManageDoctors"));
 const ManagePatients = lazy(() => import("./pages/admin/ManagePatients"));
-
+const AdminProfile = lazy(() => import("./pages/admin/AdminProfile"));
+const AddDoctor = lazy(() => import("./pages/admin/AddDoctor"));
+const AddPatient = lazy(() => import("./pages/admin/AddPatient"));
+const DoctorProfile = lazy(()=> import ("./pages/doctor/DoctorProfile"));
 const Dashboard = lazy(() => import("./pages/doctor/Dashboard"));
 const DoctorAppointment = lazy(() => import("./pages/doctor/Appointment"));
-const Notifications = lazy(() => import("./pages/doctor/Notifications"));
-const Messages = lazy(() => import("./pages/doctor/Messages"));
 const Patients = lazy(() => import("./pages/doctor/Patients"));
 const Settings = lazy(() => import("./pages/doctor/Settings"));
-const Schedules = lazy(() => import("./pages/doctor/Schedules"));
+const Reports = lazy(() => import("./pages/admin/Reports"));
 
 // admin routes
 const AdminDashboard = lazy(() => import("./pages/admin/AdminDashboard"));
@@ -46,12 +47,8 @@ const App = () => {
         {/* doctors routes */}
         <Route path="/doctor" element={<Dashboard />} />
         <Route path="/doctor/appointments" element={<DoctorAppointment />} />
-        <Route path="/doctor/notifications" element={<Notifications />} />
-        <Route path="/doctor/messages" element={<Messages />} />
         <Route path="/doctor/patients" element={<Patients />} />
-        <Route path="/doctor/settings" element={<Settings />} />
-        <Route path="/doctor/schedules" element={<Schedules />} />
-
+        <Route path="/doctor/settings" element={<DoctorProfile />} />
         {/* admin routes */}
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/admin/manage-doctors" element={<ManageDoctors />} />
@@ -60,9 +57,10 @@ const App = () => {
         <Route path="/admin/edit-patient/:id" element={<EditPatient />} />
         <Route path="/admin/settings" element={<Settings />} />
         <Route path="/admin/patients" element={<Patients />} />
-        {/* <Route path="/admin/add-new-doctor" element={<Appointments />} /> */}
-        <Route path="/admin/messages" element={<Messages />} />
-        <Route path="/admin/notifications" element={<Notifications />} />
+        <Route path="/admin/profile" element={<AdminProfile />} />
+        <Route path="/admin/add-doctor" element={<AddDoctor />} />
+        <Route path="/admin/add-patient" element={<AddPatient />} />
+        <Route path="/admin/reports" element={<Reports />} />
         {/* error handling */}
         <Route path="*" element={<ErrorPage />} />
       </Routes>
