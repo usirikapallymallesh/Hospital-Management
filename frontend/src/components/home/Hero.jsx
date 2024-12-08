@@ -1,5 +1,6 @@
 import React from 'react';
 import heroImg from '../../assets/images/HomeHero.png';
+import {motion} from "framer-motion"
 
 const Hero = () => {
   return (
@@ -17,7 +18,7 @@ const Hero = () => {
         </button>
       </div>
       <div className=" md:mt-0 w-[70%]  order-1 md:order-2 h-full flex items-end justify-end">
-        <img src={heroImg} alt="Hero" className="w-full h-full  pt-44 shadow-inherit" />
+        <motion.img  initial={{x:+100,opacity:0}} whileInView={{x:0,opacity:1}} src={heroImg} alt="Hero" className="w-full h-full  pt-44 shadow-inherit" />
       </div>
     </main>
   );
