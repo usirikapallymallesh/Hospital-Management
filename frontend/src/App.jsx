@@ -19,7 +19,7 @@ const ManagePatients = lazy(() => import("./pages/admin/ManagePatients"));
 const AdminProfile = lazy(() => import("./pages/admin/AdminProfile"));
 const AddDoctor = lazy(() => import("./pages/admin/AddDoctor"));
 const AddPatient = lazy(() => import("./pages/admin/AddPatient"));
-const DoctorProfile = lazy(()=> import ("./pages/doctor/DoctorProfile"));
+const DoctorProfile = lazy(() => import("./pages/doctor/DoctorProfile"));
 const Dashboard = lazy(() => import("./pages/doctor/Dashboard"));
 const DoctorAppointment = lazy(() => import("./pages/doctor/Appointment"));
 const Patients = lazy(() => import("./pages/doctor/Patients"));

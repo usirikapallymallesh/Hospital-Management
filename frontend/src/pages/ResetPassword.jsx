@@ -1,5 +1,5 @@
-import React from 'react';
-import { Form, Input, Button, Typography, message } from 'antd';
+import React from "react";
+import { Form, Input, Button, Typography, message } from "antd";
 // import 'antd/dist/antd.css'; // Import Ant Design styles
 
 const { Title } = Typography;
@@ -10,39 +10,39 @@ const ResetPassword = () => {
 
     if (newPassword === confirmPassword) {
       // Handle password reset logic here
-      console.log('Password reset successfully:', newPassword);
-      message.success('Password reset successfully!');
+      console.log("Password reset successfully:", newPassword);
+      message.success("Password reset successfully!");
     } else {
-      message.error('Passwords do not match!');
+      message.error("Passwords do not match!");
     }
   };
 
   return (
     <div style={styles.container}>
       <Title level={2}>Reset Password</Title>
-      <Form
-        name="reset_password"
-        onFinish={onFinish}
-        style={styles.form}
-      >
+      <Form name="reset_password" onFinish={onFinish} style={styles.form}>
         <Form.Item
           name="newPassword"
-          rules={[{ required: true, message: 'Please input your new password!' }]}
+          rules={[
+            { required: true, message: "Please input your new password!" },
+          ]}
         >
           <Input.Password placeholder="New Password" />
         </Form.Item>
 
         <Form.Item
           name="confirmPassword"
-          dependencies={['newPassword']}
+          dependencies={["newPassword"]}
           rules={[
-            { required: true, message: 'Please confirm your new password!' },
+            { required: true, message: "Please confirm your new password!" },
             ({ getFieldValue }) => ({
               validator(_, value) {
-                if (!value || getFieldValue('newPassword') === value) {
+                if (!value || getFieldValue("newPassword") === value) {
                   return Promise.resolve();
                 }
-                return Promise.reject(new Error('The two passwords do not match!'));
+                return Promise.reject(
+                  new Error("The two passwords do not match!")
+                );
               },
             }),
           ]}
@@ -62,19 +62,19 @@ const ResetPassword = () => {
 
 const styles = {
   container: {
-    maxWidth: '400px',
-    margin: '100px auto',
-    padding: '20px',
-    borderRadius: '8px',
-    boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
-    backgroundColor: '#fff',
+    maxWidth: "400px",
+    margin: "100px auto",
+    padding: "20px",
+    borderRadius: "8px",
+    boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
+    backgroundColor: "#fff",
   },
   form: {
-    display: 'flex',
-    flexDirection: 'column',
+    display: "flex",
+    flexDirection: "column",
   },
   button: {
-    marginTop: '10px',
+    marginTop: "10px",
   },
 };
 

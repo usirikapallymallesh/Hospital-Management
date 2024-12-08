@@ -3,8 +3,8 @@ import { Form, Input, Button, Select, DatePicker } from "antd";
 import { FaUser, FaLock, FaEnvelope, FaPhone } from "react-icons/fa"; // Import icons from React Icons
 import { CalendarOutlined } from "@ant-design/icons"; // Import Calendar icon from Ant Design
 import moment from "moment";
-import bgImage from '../assets/images/loginBg1.jpg';
-import { Link } from 'react-router-dom'; // Import Link for navigation
+import bgImage from "../assets/images/loginBg1.jpg";
+import { Link } from "react-router-dom"; // Import Link for navigation
 
 const { Option } = Select;
 
@@ -52,47 +52,60 @@ const Register = () => {
             <Form.Item
               label="First Name"
               name="firstName"
-              rules={[{ required: true, message: "Please enter your first name!" }]}
+              rules={[
+                { required: true, message: "Please enter your first name!" },
+              ]}
             >
               <Input
                 placeholder="Enter your first name"
                 prefix={<FaUser />}
                 className="h-12 text-black placeholder-gray-400 bg-white border border-gray-300 focus:border-purple-500"
-                style={{ boxShadow: 'none' }}
+                style={{ boxShadow: "none" }}
               />
             </Form.Item>
             <Form.Item
               label="Last Name"
               name="lastName"
-              rules={[{ required: true, message: "Please enter your last name!" }]}
+              rules={[
+                { required: true, message: "Please enter your last name!" },
+              ]}
             >
               <Input
                 placeholder="Enter your last name"
                 prefix={<FaUser />}
                 className="h-12 text-black placeholder-gray-400 bg-white border border-gray-300 focus:border-purple-500"
-                style={{ boxShadow: 'none' }}
+                style={{ boxShadow: "none" }}
               />
             </Form.Item>
             <Form.Item
               label="Email"
               name="email"
               rules={[
-                { required: true, type: "email", message: "Please enter a valid email!" },
+                {
+                  required: true,
+                  type: "email",
+                  message: "Please enter a valid email!",
+                },
               ]}
             >
               <Input
                 placeholder="Enter your email"
                 prefix={<FaEnvelope />}
                 className="h-12 text-black placeholder-gray-400 bg-white border border-gray-300 focus:border-purple-500"
-                style={{ boxShadow: 'none' }}
+                style={{ boxShadow: "none" }}
               />
             </Form.Item>
             <Form.Item
               label="Gender"
               name="gender"
-              rules={[{ required: true, message: "Please select your gender!" }]}
+              rules={[
+                { required: true, message: "Please select your gender!" },
+              ]}
             >
-              <Select placeholder="Select your gender" className="bg-white text-black border border-gray-300">
+              <Select
+                placeholder="Select your gender"
+                className="bg-white text-black border border-gray-300"
+              >
                 <Option value="M">Male</Option>
                 <Option value="F">Female</Option>
                 <Option value="O">Other</Option>
@@ -101,19 +114,26 @@ const Register = () => {
             <Form.Item
               label="Phone Number"
               name="phoneNumber"
-              rules={[{ required: true, message: "Please enter your phone number!" }]}
+              rules={[
+                { required: true, message: "Please enter your phone number!" },
+              ]}
             >
               <Input
                 placeholder="Enter your phone number"
                 prefix={<FaPhone />}
                 className="h-12 text-black placeholder-gray-400 bg-white border border-gray-300 focus:border-purple-500"
-                style={{ boxShadow: 'none' }}
+                style={{ boxShadow: "none" }}
               />
             </Form.Item>
             <Form.Item
               label="Date of Birth"
               name="dob"
-              rules={[{ required: true, message: "Please select your date of birth!" }]}
+              rules={[
+                {
+                  required: true,
+                  message: "Please select your date of birth!",
+                },
+              ]}
             >
               <DatePicker
                 format={"YYYY-MM-DD"}
@@ -121,20 +141,24 @@ const Register = () => {
                 style={{ width: "100%" }}
                 suffixIcon={<CalendarOutlined />}
                 ref={dobRef} // Attach ref to DatePicker
-                disabledDate={(current) => current && current > moment().endOf("day")}
+                disabledDate={(current) =>
+                  current && current > moment().endOf("day")
+                }
                 className="bg-white text-black" // Customize DatePicker background and text color
               />
             </Form.Item>
             <Form.Item
               label="Password"
               name="password"
-              rules={[{ required: true, message: "Please enter your password!" }]}
+              rules={[
+                { required: true, message: "Please enter your password!" },
+              ]}
             >
               <Input.Password
                 placeholder="Enter your password"
                 prefix={<FaLock />}
                 className="h-12 text-black placeholder-gray-400 bg-white border border-gray-300 focus:border-purple-500"
-                style={{ boxShadow: 'none' }}
+                style={{ boxShadow: "none" }}
               />
             </Form.Item>
             <Form.Item
@@ -148,7 +172,9 @@ const Register = () => {
                     if (!value || getFieldValue("password") === value) {
                       return Promise.resolve();
                     }
-                    return Promise.reject(new Error("The two passwords do not match!"));
+                    return Promise.reject(
+                      new Error("The two passwords do not match!")
+                    );
                   },
                 }),
               ]}
@@ -157,13 +183,17 @@ const Register = () => {
                 placeholder="Confirm your password"
                 prefix={<FaLock />}
                 className="h-12 text-black placeholder-gray-400 bg-white border border-gray-300 focus:border-purple-500"
-                style={{ boxShadow: 'none' }}
+                style={{ boxShadow: "none" }}
               />
             </Form.Item>
           </div>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit" className="w-full mt-6 bg-[#1F2B6C] text-base py-5 hover:bg-[#101638]">
+            <Button
+              type="primary"
+              htmlType="submit"
+              className="w-full mt-6 bg-[#1F2B6C] text-base py-5 hover:bg-[#101638]"
+            >
               Register
             </Button>
           </Form.Item>
@@ -171,8 +201,11 @@ const Register = () => {
 
         {/* Login Prompt */}
         <p className="text-center text-gray-400 mt-4">
-          If you are already registered, please 
-          <Link to="/login" className="text-purple-700 hover:underline"> login here.</Link>
+          If you are already registered, please
+          <Link to="/login" className="text-purple-700 hover:underline">
+            {" "}
+            login here.
+          </Link>
         </p>
       </div>
     </div>

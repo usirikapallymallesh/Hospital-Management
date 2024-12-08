@@ -4,7 +4,7 @@ import AllPagesHero from "../../components/AllPagesHero";
 import MapCard from "../../components/contact/MapCard";
 import News from "../../components/home/News"; // Ensure this is needed
 import ContactForm from "../../components/contact/ContactForm";
-import contactPageBg from '../../assets/images/contactPageBg.jpeg';
+import contactPageBg from "../../assets/images/contactPageBg.jpeg";
 
 const Contact = () => {
   return (

@@ -110,9 +110,8 @@ const Patients = () => {
           <DoctorHeader />
         </section>
         <section className="p-8 ">
-        <section className="flex justify-between py-4 items-center "> 
-          <h2 className="text-3xl font-semibold ">Manage Patient</h2>
-
+          <section className="flex justify-between py-4 items-center ">
+            <h2 className="text-3xl font-semibold ">Manage Patient</h2>
           </section>
 
           <Table

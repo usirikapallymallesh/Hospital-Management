@@ -116,11 +116,15 @@ const ManageDoctors = () => {
         </section>
         <section className="p-8 ">
           <section className="flex justify-between py-4 items-center ">
-          <h2 className="text-3xl font-semibold ">Manage Doctors</h2>
+            <h2 className="text-3xl font-semibold ">Manage Doctors</h2>
 
-          <Button type="primary" onClick={handleAddNewDoctor} className="mb-4">
-            Add New Doctor
-          </Button>
+            <Button
+              type="primary"
+              onClick={handleAddNewDoctor}
+              className="mb-4"
+            >
+              Add New Doctor
+            </Button>
           </section>
 
           <Table

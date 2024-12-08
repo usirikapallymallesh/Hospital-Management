@@ -110,12 +110,16 @@ const ManagePatients = () => {
           <AdminHeader />
         </section>
         <section className="p-8 ">
-        <section className="flex justify-between py-4 items-center "> 
-          <h2 className="text-3xl font-semibold ">Manage Patients</h2>
+          <section className="flex justify-between py-4 items-center ">
+            <h2 className="text-3xl font-semibold ">Manage Patients</h2>
 
-          <Button type="primary" onClick={handleAddNewPatient} className="mb-4">
-            Add New Patient
-          </Button>
+            <Button
+              type="primary"
+              onClick={handleAddNewPatient}
+              className="mb-4"
+            >
+              Add New Patient
+            </Button>
           </section>
 
           <Table

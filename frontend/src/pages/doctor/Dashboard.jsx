@@ -80,7 +80,9 @@ const Dashboard = () => {
       {/* Main Content */}
       <main className="flex-grow overflow-y-auto">
         <DoctorHeader />
-        <h1 className="text-3xl font-bold text-blue-600 mb-4">Dashboard Overview</h1>
+        <h1 className="text-3xl font-bold text-blue-600 mb-4">
+          Dashboard Overview
+        </h1>
         <p className="text-gray-700 mb-6">
           Manage your patients and appointments effectively.
         </p>
@@ -95,14 +97,18 @@ const Dashboard = () => {
 
           {/* Line Chart */}
           <div className="bg-white shadow-lg rounded-lg p-4 transition-transform transform hover:-translate-y-1">
-            <h3 className="font-semibold text-lg mb-2">Appointments Over Weeks</h3>
+            <h3 className="font-semibold text-lg mb-2">
+              Appointments Over Weeks
+            </h3>
             <Line data={lineData} options={{ responsive: true }} />
           </div>
         </div>
 
         {/* Upcoming Patients Section */}
         <div className="bg-white shadow-lg rounded-lg p-6 mt-6">
-          <h1 className="text-xl font-bold text-center text-gray-800 mb-4">Upcoming Patients</h1>
+          <h1 className="text-xl font-bold text-center text-gray-800 mb-4">
+            Upcoming Patients
+          </h1>
           <ul className="space-y-4">
             {upcomingPatients.map((patient) => (
               <li
@@ -112,7 +118,9 @@ const Dashboard = () => {
               >
                 <FaUser className="text-blue-500 mr-3" />
                 <div>
-                  <h2 className="text-lg font-semibold text-gray-700">{patient.name}</h2>
+                  <h2 className="text-lg font-semibold text-gray-700">
+                    {patient.name}
+                  </h2>
                   <p className="text-gray-600">
                     Appointment Time: {new Date(patient.time).toLocaleString()}
                   </p>
