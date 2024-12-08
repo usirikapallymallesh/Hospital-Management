@@ -66,13 +66,13 @@ const Login = () => {
           filter: `brightness(${50}%)`,
         }}
       ></div>
-      <div className="w-full max-w-md p-8 rounded-lg shadow-md text-white backdrop-brightness-105 border">
-        <h2 className="text-4xl font-bold text-center text-white brightness-100 mb-4">
+      <div className="w-full max-w-md p-8 rounded-lg shadow-md text-black backdrop-brightness-105 border bg-red-50 ">
+        <h2 className="text-4xl font-bold text-center text-black brightness-100 mb-4">
           Login
         </h2>
         <Form layout="vertical" onFinish={onFinish}>
           <Form.Item
-            label={<span className="custom-label text-white ml-1">Email</span>}
+            label={<span className="custom-label  ml-1">Email</span>}
             name="email"
             rules={[
               {
@@ -84,8 +84,8 @@ const Login = () => {
           >
             <Input
               placeholder="Enter your email"
-              prefix={<FaUser className="text-white" />}
-              className="h-10 text-white placeholder-white  focus:border-transparent focus:ring-0"
+              prefix={<FaUser />}
+              className="h-10  placeholder-white  focus:border-transparent focus:ring-0"
               paddingXS
               style={{
                 backgroundColor: "transparent", // Ensure background is transparent
@@ -94,16 +94,14 @@ const Login = () => {
             />
           </Form.Item>
           <Form.Item
-            label={
-              <span className="custom-label text-white ml-1">Password</span>
-            }
+            label={<span className="custom-label ml-1">Password</span>}
             name="password"
             rules={[{ required: true, message: "Please enter your password!" }]}
           >
             <Input.Password
               placeholder="Enter your password"
-              prefix={<FaLock className="text-white" />}
-              className="h-10 text-white placeholder-white bg-transparent  focus:border-transparent focus:ring-0"
+              prefix={<FaLock />}
+              className="h-10  placeholder-white bg-transparent  focus:border-transparent focus:ring-0"
               style={{
                 backgroundColor: "transparent", // Ensure background is transparent
                 boxShadow: "none", // Remove any box shadow if present
