@@ -49,12 +49,13 @@ const News = () => {
 
       <Carousel autoplay dots={false}>
         {/* Create slides with three articles each */}
-        {[...Array(Math.ceil(newsArticles.length / 3))].map((_, slideIndex) => (
-          <div key={slideIndex} className="flex justify-center">
-            <div className="flex gap-6">
-              {newsArticles.slice(slideIndex * 3, slideIndex * 3 + 3).map((article, index) => (
-                <div key={index} className="bg-white rounded-lg shadow-md p-4 max-w-xs text-center">
-                  <img src={article.image} alt={article.title} className="w-full h-48 rounded-md object-cover mb-4" />
+        {[...Array(Math.ceil(newsArticles.length / 4))].map((_, slideIndex) => (
+          <div key={slideIndex} className="grid grid-cols-2 grid-rows-2 ">
+            <div className="grid grid-cols-2 grid-rows-2 gap-3">
+              {newsArticles.slice(slideIndex * 4, slideIndex * 2 + 4).map((article, index) => (
+                <div key={index} className="bg-white rounded-lg shadow-md p-4  text-center flex gap-2 w-full">
+                  <img src={article.image} alt={article.title} className="w-32 h-full rounded-md  mb-4" />
+                  <div className='flex flex-col justify-center items-start'>
                   <h4 className="text-lg font-semibold">{article.title}</h4>
                   <p className="text-gray-600 mb-2">{article.description}</p>
                   <div className="flex justify-center space-x-2">
@@ -67,6 +68,9 @@ const News = () => {
                       <span className="ml-1">{article.likes}</span>
                     </div>
                   </div>
+
+                  </div>
+                 
                 </div>
               ))}
             </div>
