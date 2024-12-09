@@ -3,6 +3,7 @@ import { Form, Input, Button } from "antd";
 import { MailOutlined } from "@ant-design/icons"; // Import the mail icon
 import ForgotPasswordImg from "../assets/images/forgottenPass1.png"; // Import your image
 import bgImage from "../assets/images/loginBg1.jpg"; // Import your background image
+import { NavLink } from "react-router-dom";
 
 const ForgotPassword = () => {
   const onFinish = (values) => {
@@ -65,10 +66,10 @@ const ForgotPassword = () => {
 
           <p className="text-center text-gray-500 mt-4">
             Remembered your password?
-            <a href="/login" className="text-purple-600 hover:underline">
+            <NavLink to="/login" className="text-purple-600 hover:underline">
               {" "}
               Log In
-            </a>
+            </NavLink>
           </p>
         </div>
       </div>

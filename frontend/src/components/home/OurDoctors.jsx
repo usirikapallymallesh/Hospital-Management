@@ -68,7 +68,7 @@ const OurDoctors = () => {
                   <img
                     src={doc.image}
                     alt={doc.name}
-                    className="w-full h-80  mx-auto mb-4"
+                    className="w-full h-72  mx-auto mb-4"
                   />
                   <h4 className="text-lg font-semibold">{doc.name}</h4>
                   <p className="text-gray-600">{doc.specialty}</p>
