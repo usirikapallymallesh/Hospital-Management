@@ -63,7 +63,7 @@ const ContactForm = () => {
       {/* Cards Section */}
       <div className="md:w-1/2 grid grid-cols-1 sm:grid-cols-2 gap-6 md:mr-12">
         {/* Card 1: Email */}
-        <div className=" rounded-sm shadow-lg p-2 flex flex-col justify-center  items-center bg-white hover:bg-blue-900  hover:text-white">
+        <div className=" rounded-sm shadow-lg p-2 flex flex-col justify-center  items-center bg-white transition-transform transform hover:scale-105 duration-300 hover:bg-blue-900  hover:text-white">
           <FaEnvelope className="text-5xl mb-5" />
           <div>
             <h3 className="font-semibold text-xl work-sans-color uppercase hover:text-white">
@@ -74,7 +74,7 @@ const ContactForm = () => {
         </div>
 
         {/* Card 2: Location */}
-        <div className=" rounded-sm shadow-lg p-2 flex flex-col items-center justify-center bg-white hover:bg-blue-900 hover:text-white">
+        <div className=" rounded-sm shadow-lg p-2 flex flex-col items-center justify-center bg-white transition-transform transform hover:scale-105 duration-300 hover:bg-blue-900 hover:text-white">
           <FaMapMarkerAlt className=" text-5xl mr-3 mb-5 " />
           <div>
             <h3 className="font-semibold text-xl work-sans-color uppercase">
@@ -87,7 +87,7 @@ const ContactForm = () => {
         </div>
 
         {/* Card 3: Contact Number */}
-        <div className=" rounded-sm shadow-lg p-4 flex items-center flex-col justify-center bg-white hover:bg-blue-900 hover:text-white">
+        <div className=" rounded-sm shadow-lg p-4 flex items-center flex-col justify-center transition-transform transform hover:scale-105 bg-white hover:bg-blue-900 hover:text-white">
           <FaPhone className="text-5xl mr-3 mb-5" />
           <div>
             <h3 className="font-semibold text-xl work-sans-color uppercase">
@@ -98,7 +98,7 @@ const ContactForm = () => {
         </div>
 
         {/* Card 4: Working Hours */}
-        <div className="rounded-sm shadow-lg p-4 flex items-center justify-center hover:bg-blue-900 flex-col bg-white hover:text-white ">
+        <div className="rounded-sm shadow-lg p-4 flex items-center justify-center hover:bg-blue-900 flex-col transition-transform transform duration-300 hover:scale-105 bg-white hover:text-white ">
           <FaClock className="text-5xl mr-3 mb-5 " />
           <div>
             <h3 className="font-semibold text-xl work-sans-color uppercase hover:text-white">

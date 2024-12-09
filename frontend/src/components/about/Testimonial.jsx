@@ -1,6 +1,6 @@
 import React from 'react';
 import { Carousel } from 'antd';
-// import 'antd/dist/antd.css'; // Import Ant Design styles
+import BgImg from '../../assets/images/DoctorPageBg1.png';
 
 const Testimonial = () => {
   const testimonials = [
@@ -23,8 +23,8 @@ const Testimonial = () => {
   ];
 
   return (
-    <div className="relative h-screen bg-cover bg-center" style={{ backgroundImage: 'url(https://via.placeholder.com/1920x1080)' }}>
-      <div className="absolute inset-0 bg-black opacity-50"></div> {/* Overlay for better text visibility */}
+    <div className="relative h-96 bg-cover bg-center  w-full" style={{ backgroundImage:`url(${BgImg})`  }}>
+      <div className="absolute inset-0 bg-blue-900 opacity-40"></div> {/* Overlay for better text visibility */}
       <div className="relative z-10 flex items-center justify-center h-full">
         <Carousel autoplay dots={false} className="w-full max-w-2xl">
           {testimonials.map((testimonial, index) => (

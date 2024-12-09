@@ -50,7 +50,7 @@ const News = () => {
       <Carousel autoplay dots={false}>
         {/* Create slides with three articles each */}
         {[...Array(Math.ceil(newsArticles.length / 4))].map((_, slideIndex) => (
-          <div key={slideIndex} className="grid grid-cols-2 grid-rows-2 ">
+          <div key={slideIndex} className="grid grid-cols-2 grid-rows-2 bg-gray-50 ">
             <div className="grid grid-cols-2 grid-rows-2 gap-3">
               {newsArticles.slice(slideIndex * 4, slideIndex * 2 + 4).map((article, index) => (
                 <div key={index} className="bg-white rounded-lg shadow-md p-4  text-center flex gap-2 w-full">
