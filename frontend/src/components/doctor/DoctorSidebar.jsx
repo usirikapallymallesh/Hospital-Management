@@ -9,6 +9,7 @@ import {
   FaUserCircle,
 } from "react-icons/fa"; // Importing icons
 import { NavLink, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion"; // Import motion for animations
 
 const { Sider } = Layout;
 
@@ -23,50 +24,35 @@ const DoctorSidebar = () => {
         </h1>
       </div>
       <section className="flex flex-col text-white px-4 gap-4 text-lg">
-        <NavLink
-          to={"/doctor"}
-          className={({ isActive }) =>
-            `flex items-center p-2 rounded-sm transition duration-200 ${
-              isActive ? "bg-blue-600" : "hover:bg-blue-500"
-            }`
-          }
-        >
-          <FaTachometerAlt className="mr-2" />
-          Dashboard
-        </NavLink>
-        <NavLink
-          to={"/doctor/patients"}
-          className={({ isActive }) =>
-            `flex items-center p-2 rounded-sm transition duration-200 ${
-              isActive ? "bg-blue-600" : "hover:bg-blue-500"
-            }`
-          }
-        >
-          <FaUser className="mr-2" />
-          Patients
-        </NavLink>
-        <NavLink
-          to={"/doctor/appointments"}
-          className={({ isActive }) =>
-            `flex items-center p-2 rounded-sm transition duration-200 ${
-              isActive ? "bg-blue-600" : "hover:bg-blue-500"
-            }`
-          }
-        >
-          <FaCalendarCheck className="mr-2" />
-          Appointments
-        </NavLink>
-        <NavLink
-          to={"/doctor/settings"}
-          className={({ isActive }) =>
-            `flex items-center p-2 rounded-sm transition duration-200 ${
-              isActive ? "bg-blue-600" : "hover:bg-blue-500"
-            }`
-          }
-        >
-          <FaCog className="mr-2" />
-          Settings
-        </NavLink>
+        {[
+          { to: "/doctor", icon: <FaTachometerAlt />, label: "Dashboard" },
+          { to: "/doctor/patients", icon: <FaUser />, label: "Patients" },
+          {
+            to: "/doctor/appointments",
+            icon: <FaCalendarCheck />,
+            label: "Appointments",
+          },
+          { to: "/doctor/settings", icon: <FaCog />, label: "Settings" },
+        ].map(({ to, icon, label }) => (
+          <motion.div
+            key={to}
+            initial={{ opacity: 0, x: -20 }} // Initial state for animation
+            animate={{ opacity: 1, x: 0 }} // Animate to full opacity and position
+            transition={{ duration: 0.3 }} // Transition duration
+          >
+            <NavLink
+              to={to}
+              className={({ isActive }) =>
+                `flex items-center p-2 rounded-sm transition duration-200 ${
+                  isActive ? "bg-blue-600" : "hover:bg-blue-500"
+                }`
+              }
+            >
+              {icon}
+              {label}
+            </NavLink>
+          </motion.div>
+        ))}
       </section>
 
       {/* User Icon at the Bottom */}

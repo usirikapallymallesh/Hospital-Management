@@ -1,75 +1,109 @@
-import React from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { FiPhoneCall } from "react-icons/fi";
 import { LuClock5 } from "react-icons/lu";
 import { IoLocationOutline } from "react-icons/io5";
 import { IoIosSearch } from "react-icons/io";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { motion } from "framer-motion";
 
 const Header = () => {
+  const [showHeader, setShowHeader] = useState(true);
+  const [scrollY, setScrollY] = useState(0);
+  const prevScrollY = useRef(0); // Store previous scroll position
+
+  // Effect to update scroll position
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      // Check if the scroll position is below or above the threshold
+      if (currentScrollY > 250 && prevScrollY.current <= 250) {
+        setShowHeader(false); // Hide header when scrolling down past threshold
+      } else if (currentScrollY <= 250 && prevScrollY.current > 250) {
+        setShowHeader(true); // Show header when scrolling up above threshold
+      }
+
+      // Update the scroll position
+      prevScrollY.current = currentScrollY;
+      setScrollY(currentScrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    // Cleanup function
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
-    <header className="bg-white shadow-md">
-      <div className="container mx-auto flex flex-col md:flex-row items-center justify-between p-2 sm:px-6 md:px-8 lg:px-10 xl:px-12">
-        <motion.h1
-          className="text-blue-900 text-xl md:text-2xl lg:text-3xl yeseva-one-regular uppercase font-semibold"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          Med<span className="text-[#159EEC]">dical</span>
-        </motion.h1>
-        <div className="flex space-x-4 md:space-x-8 mt-4 md:mt-0 work-sans-color">
-          <motion.div
-            className="flex items-center text-gray-600"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
+    <header className="bg-white shadow-md sticky top-0 z-20">
+      {/* Conditional rendering based on scroll position */}
+      {showHeader && (
+        <div className="container mx-auto static flex flex-col md:flex-row items-center justify-between p-2 sm:px-6 md:px-8 lg:px-10 xl:px-12">
+          <motion.h1
+            className="text-blue-900 text-xl md:text-2xl lg:text-3xl yeseva-one-regular uppercase font-semibold"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <FiPhoneCall className="text-xl md:text-2xl mr-2" />
-            <div>
-              <span className="font-medium text-sm md:text-base">
-                Emergency
-              </span>
-              <span className="block text-[#159EEC] font-medium text-sm md:text-base">
-                +91 7093000795
-              </span>
-            </div>
-          </motion.div>
-          <motion.div
-            className="flex items-center text-gray-600"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-          >
-            <LuClock5 className="text-xl md:text-2xl mr-1" />
-            <div>
-              <span className="font-medium text-sm md:text-base">
-                Work Hour
-              </span>
-              <span className="block text-[#159EEC] text-sm md:text-base">
-                09:00 - 20:00 Everyday
-              </span>
-            </div>
-          </motion.div>
-          <motion.div
-            className="flex items-center text-gray-600"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            <IoLocationOutline className="text-xl md:text-2xl mr-1" />
-            <div>
-              <span className="font-medium text-sm md:text-base">Location</span>
-              <span className="block text-[#159EEC] text-sm md:text-base">
-                New York, USA
-              </span>
-            </div>
-          </motion.div>
+            Med<span className="text-[#159EEC]">dical</span>
+          </motion.h1>
+          <div className="flex space-x-4 md:space-x-8 mt-4 md:mt-0 work-sans-color">
+            <motion.div
+              className="flex items-center text-gray-600"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <FiPhoneCall className="text-xl md:text-2xl mr-2" />
+              <div>
+                <span className="font-medium text-sm md:text-base">
+                  Emergency
+                </span>
+                <span className="block text-[#159EEC] font-medium text-sm md:text-base">
+                  +91 7093000795
+                </span>
+              </div>
+            </motion.div>
+            <motion.div
+              className="flex items-center text-gray-600"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+            >
+              <LuClock5 className="text-xl md:text-2xl mr-1" />
+              <div>
+                <span className="font-medium text-sm md:text-base">
+                  Work Hour
+                </span>
+                <span className="block text-[#159EEC] text-sm md:text-base">
+                  09:00 - 20:00 Everyday
+                </span>
+              </div>
+            </motion.div>
+            <motion.div
+              className="flex items-center text-gray-600"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              <IoLocationOutline className="text-xl md:text-2xl mr-1" />
+              <div>
+                <span className="font-medium text-sm md:text-base">
+                  Location
+                </span>
+                <span className="block text-[#159EEC] text-sm md:text-base">
+                  New York, USA
+                </span>
+              </div>
+            </motion.div>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Navigation Bar */}
-      <nav className="bg-[#1F2B6C] py-3 px-4 md:px-8 lg:px-12 work-sans-color">
+      <nav className="bg-[#1F2B6C] py-3 px-4 md:px-8 lg:px-12 work-sans-color shadow-md">
         <div className="container mx-auto flex items-center justify-between px-4">
           <ol className="flex space-x-4 md:space-x-6">
             <li>
@@ -78,7 +112,7 @@ const Header = () => {
                 className="text-white hover:text-[#159EEC] transition duration-300 text-sm md:text-base"
               >
                 Home
-              </NavLink>{" "}
+              </NavLink>
             </li>
 
             {["About Us", "Services", "Doctors", "News", "Contact"].map(

@@ -78,7 +78,7 @@ const Dashboard = () => {
       <DoctorSidebar />
 
       {/* Main Content */}
-      <main className="flex-grow overflow-y-auto">
+      <main className="flex-grow overflow-y-auto ">
         <DoctorHeader />
         <h1 className="text-3xl font-bold text-blue-600 mb-4">
           Dashboard Overview
@@ -88,7 +88,7 @@ const Dashboard = () => {
         </p>
 
         {/* Charts Section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6 px-4">
           {/* Bar Chart */}
           <div className="bg-white shadow-lg rounded-lg p-4 transition-transform transform hover:-translate-y-1">
             <h3 className="font-semibold text-lg mb-2">Patients Registered</h3>
