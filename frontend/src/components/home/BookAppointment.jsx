@@ -1,7 +1,6 @@
 import React from "react";
 import { Form, Input, Button, Select, DatePicker, TimePicker } from "antd";
 import backgroundImg from "../../assets/images/HomeBgLoptop.jpeg";
-// import 'antd/dist/antd.css'; // Import Ant Design styles
 
 const { Option } = Select;
 

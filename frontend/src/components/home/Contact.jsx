@@ -1,21 +1,21 @@
 import React from "react";
 import { FaMapMarkerAlt, FaClock, FaEnvelope, FaPhone } from "react-icons/fa"; // Importing icons
+import { motion } from "framer-motion"; // Import Framer Motion
 
 const Contact = () => {
   const contactInfo = [
     {
-      icon: <FaPhone className="text-4xl " />,
+      icon: <FaPhone className="text-4xl" />,
       title: "Phone",
       description: "+1 (234) 567-8900",
       description1: "+1 (234) 567-8900",
     },
     {
-      icon: <FaMapMarkerAlt className="text-4xl " />,
+      icon: <FaMapMarkerAlt className="text-4xl" />,
       title: "Emergency Location",
       description: "123 Health St, Wellness City, HC 12345",
       description1: "+1 (234) 567-8900",
     },
-
     {
       icon: <FaEnvelope className="text-4xl" />,
       title: "Email",
@@ -23,7 +23,7 @@ const Contact = () => {
       description1: "+1 (234) 567-8900",
     },
     {
-      icon: <FaClock className="text-4xl " />,
+      icon: <FaClock className="text-4xl" />,
       title: "Work Hours",
       description: "Mon-Fri: 9 AM - 5 PM",
       description1: "+1 (234) 567-8900",
@@ -39,19 +39,23 @@ const Contact = () => {
         Contact
       </h1>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 work-sans-color work-sans-color">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 work-sans-color">
         {contactInfo.map((info, index) => (
-          <div
+          <motion.div
             key={index}
-            className="bg-white rounded-sm shadow-md p-10 flex flex-col items-center text-center transition-all ease-in-out delay-0 duration-500 hover:bg-[#1F2B6C] hover:text-white"
+            className="bg-white rounded-sm shadow-md p-10 flex flex-col items-center text-center transition-all ease-in-out duration-500 hover:bg-[#1F2B6C] hover:text-white"
+            initial={{ opacity: 0, y: 20 }} // Initial state for animation
+            whileInView={{ opacity: 1, y: 0 }} // Animate to this state
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: index * 0.1 }} // Staggered animation
           >
             {info.icon}
             <h4 className="text-lg font-semibold mt-4 uppercase">
               {info.title}
             </h4>
-            <p className=" mt-2">{info.description}</p>
-            <p className=" mt-2">{info.description1}</p>
-          </div>
+            <p className="mt-2">{info.description}</p>
+            <p className="mt-2">{info.description1}</p>
+          </motion.div>
         ))}
       </div>
     </div>

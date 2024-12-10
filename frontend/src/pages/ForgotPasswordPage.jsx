@@ -4,6 +4,7 @@ import { MailOutlined } from "@ant-design/icons"; // Import the mail icon
 import ForgotPasswordImg from "../assets/images/forgottenPass1.png"; // Import your image
 import bgImage from "../assets/images/loginBg1.jpg"; // Import your background image
 import { NavLink } from "react-router-dom";
+import { motion } from "framer-motion"; // Import motion for animations
 
 const ForgotPassword = () => {
   const onFinish = (values) => {
@@ -12,7 +13,12 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row min-h-screen bg-gray-100">
+    <motion.div
+      className="flex flex-col md:flex-row min-h-screen bg-gray-100"
+      initial={{ opacity: 0 }} // Initial opacity for fade-in effect
+      animate={{ opacity: 1 }} // Animate to full opacity
+      transition={{ duration: 0.5 }} // Transition duration
+    >
       <div
         className="absolute inset-0 bg-cover bg-center brightness-75"
         style={{
@@ -26,8 +32,13 @@ const ForgotPassword = () => {
       ></div>
 
       <div className="relative w-full md:w-1/2 flex items-center justify-center p-4">
-        <div className="relative z-10 w-full max-w-md bg-white p-8 rounded-lg shadow-lg text-black">
-          <h2 className="text-3xl font-bold text-center text--[#1F2B6C] mb-4">
+        <motion.div
+          className="relative z-10 w-full max-w-md bg-white p-8 rounded-lg shadow-lg text-black"
+          initial={{ y: -50, opacity: 0 }} // Start off-screen and transparent
+          animate={{ y: 0, opacity: 1 }} // Animate to original position and full opacity
+          transition={{ duration: 0.5 }} // Transition duration for form entry
+        >
+          <h2 className="text-3xl font-bold text-center text-[#1F2B6C] mb-4">
             Forgot Password
           </h2>
           <p className="text-center text-gray-600 mb-6">
@@ -71,7 +82,7 @@ const ForgotPassword = () => {
               Log In
             </NavLink>
           </p>
-        </div>
+        </motion.div>
       </div>
 
       {/* Image Section */}
@@ -82,7 +93,7 @@ const ForgotPassword = () => {
           className="w-[580px] h-[770px] rounded-lg shadow-md"
         />
       </div>
-    </div>
+    </motion.div>
   );
 };
 

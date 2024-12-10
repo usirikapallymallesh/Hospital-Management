@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import AdminSidebar from "../../components/admin/AdminSidebar";
 import AdminHeader from "../../components/admin/AdminHeader";
+import { motion } from "framer-motion"; // Import motion for animations
 
 // Register Chart.js components
 Chart.register(...registerables);
@@ -54,49 +55,86 @@ const AdminDashboard = () => {
         <Content
           style={{ marginTop: "64px", padding: "24px", overflowY: "auto" }}
         >
-          <div className="p-4 bg-white rounded-lg shadow-md">
+          <motion.div
+            className="p-4 bg-white rounded-lg shadow-md"
+            initial={{ opacity: 0 }} // Initial opacity for fade-in effect
+            animate={{ opacity: 1 }} // Animate to full opacity
+            transition={{ duration: 0.5 }} // Transition duration
+          >
             <h2 className="text-2xl font-bold mb-4">Dashboard Overview</h2>
             <Row gutter={16}>
               <Col xs={24} sm={12} md={6}>
-                <Card className="text-center bg-blue-100">
-                  <h3 className="text-3xl font-bold">30</h3>
-                  <p>Registered Doctors</p>
-                </Card>
+                <motion.div
+                  whileHover={{ scale: 1.05 }} // Scale effect on hover
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <Card className="text-center bg-blue-100">
+                    <h3 className="text-3xl font-bold">30</h3>
+                    <p>Registered Doctors</p>
+                  </Card>
+                </motion.div>
               </Col>
               <Col xs={24} sm={12} md={6}>
-                <Card className="text-center bg-green-100">
-                  <h3 className="text-3xl font-bold">120</h3>
-                  <p>Registered Patients</p>
-                </Card>
+                <motion.div
+                  whileHover={{ scale: 1.05 }} // Scale effect on hover
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <Card className="text-center bg-green-100">
+                    <h3 className="text-3xl font-bold">120</h3>
+                    <p>Registered Patients</p>
+                  </Card>
+                </motion.div>
               </Col>
               <Col xs={24} sm={12} md={6}>
-                <Card className="text-center bg-yellow-100">
-                  <h3 className="text-3xl font-bold">25</h3>
-                  <p>Currently Active</p>
-                </Card>
+                <motion.div
+                  whileHover={{ scale: 1.05 }} // Scale effect on hover
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <Card className="text-center bg-yellow-100">
+                    <h3 className="text-3xl font-bold">25</h3>
+                    <p>Currently Active</p>
+                  </Card>
+                </motion.div>
               </Col>
               <Col xs={24} sm={12} md={6}>
-                <Card className="text-center bg-red-100">
-                  <h3 className="text-3xl font-bold">15</h3>
-                  <p>Appointments Awaiting Confirmation</p>
-                </Card>
+                <motion.div
+                  whileHover={{ scale: 1.05 }} // Scale effect on hover
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <Card className="text-center bg-red-100">
+                    <h3 className="text-3xl font-bold">15</h3>
+                    <p>Appointments Awaiting Confirmation</p>
+                  </Card>
+                </motion.div>
               </Col>
             </Row>
 
             {/* Charts Section */}
             <Row gutter={16} className="mt-6">
               <Col xs={24} sm={24} md={12}>
-                <Card title="Doctors Registered" className="shadow-md">
-                  <Bar data={barData} options={{ responsive: true }} />
-                </Card>
+                <motion.div
+                  initial={{ y: -50 }}
+                  animate={{ y: 0 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <Card title="Doctors Registered" className="shadow-md">
+                    <Bar data={barData} options={{ responsive: true }} />
+                  </Card>
+                </motion.div>
               </Col>
               <Col xs={24} sm={24} md={12}>
-                <Card
-                  title="Patients Appointments Over Weeks"
-                  className="shadow-md"
+                <motion.div
+                  initial={{ y: -50 }}
+                  animate={{ y: 0 }}
+                  transition={{ duration: 0.5 }}
                 >
-                  <Line data={lineData} options={{ responsive: true }} />
-                </Card>
+                  <Card
+                    title="Patients Appointments Over Weeks"
+                    className="shadow-md"
+                  >
+                    <Line data={lineData} options={{ responsive: true }} />
+                  </Card>
+                </motion.div>
               </Col>
             </Row>
 
@@ -166,7 +204,7 @@ const AdminDashboard = () => {
                 bordered
               />
             </div>
-          </div>
+          </motion.div>
         </Content>
       </Layout>
     </Layout>

@@ -1,6 +1,7 @@
-import React from 'react';
-import { Carousel } from 'antd';
-import BgImg from '../../assets/images/DoctorPageBg1.png';
+import React from "react";
+import { Carousel } from "antd";
+import BgImg from "../../assets/images/DoctorPageBg1.png";
+import { motion } from "framer-motion"; // Import Framer Motion
 
 const Testimonial = () => {
   const testimonials = [
@@ -23,20 +24,37 @@ const Testimonial = () => {
   ];
 
   return (
-    <div className="relative h-96 bg-cover bg-center  w-full" style={{ backgroundImage:`url(${BgImg})`  }}>
-      <div className="absolute inset-0 bg-blue-900 opacity-40"></div> {/* Overlay for better text visibility */}
+    <div className="relative h-64 md:h-96">
+      {/* Background Image */}
+      <img
+        src={BgImg}
+        alt="Hero Background"
+        className="absolute inset-0 w-full h-full object-cover"
+      />
+
+      {/* Overlay for better text visibility */}
+      <div className="absolute inset-0 bg-blue-900 opacity-40"></div>
+
+      {/* Carousel Section */}
       <div className="relative z-10 flex items-center justify-center h-full">
         <Carousel autoplay dots={false} className="w-full max-w-2xl">
           {testimonials.map((testimonial, index) => (
-            <div key={index} className="text-center text-white p-6">
+            <motion.div
+              key={index}
+              className="text-center text-white p-6"
+              initial={{ opacity: 0, scale: 0.9 }} // Initial state for animation
+              whileInView={{ opacity: 1, scale: 1 }} // Animate to this state
+              transition={{ duration: 0.5 }} // Transition duration
+              viewport={{ once: true }}
+            >
               <p className="text-xl italic">"{testimonial.text}"</p>
               <h4 className="mt-4 font-bold">{testimonial.author}</h4>
-            </div>
+            </motion.div>
           ))}
         </Carousel>
       </div>
     </div>
   );
-}
+};
 
 export default Testimonial;

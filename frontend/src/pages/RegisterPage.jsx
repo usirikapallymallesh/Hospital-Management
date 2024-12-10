@@ -5,6 +5,7 @@ import { CalendarOutlined } from "@ant-design/icons"; // Import Calendar icon fr
 import moment from "moment";
 import bgImage from "../assets/images/loginBg1.jpg";
 import { Link } from "react-router-dom"; // Import Link for navigation
+import { motion } from "framer-motion"; // Import motion for animations
 
 const { Option } = Select;
 
@@ -28,19 +29,29 @@ const Register = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen p-4">
+    <motion.div
+      className="flex items-center justify-center min-h-screen p-4"
+      initial={{ opacity: 0 }} // Initial opacity for fade-in effect
+      animate={{ opacity: 1 }} // Animate to full opacity
+      transition={{ duration: 0.5 }} // Transition duration
+    >
       <div
-        className="absolute inset-0 bg-cover bg-center brightness-75"
+        className="absolute inset-0 bg-cover bg-center brightness-75 "
         style={{
           backgroundImage: `url(${bgImage})`,
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           height: "100%",
           width: "100%",
-          filter: `brightness(${50}%)`,
+          filter: `brightness(40%)`,
         }}
       ></div>
-      <div className="w-full max-w-screen-md p-8 bg-red-50 rounded-lg shadow-md text-white z-10">
+      <motion.div
+        className="w-full max-w-screen-md p-8 bg-red-50 rounded-lg shadow-md text-white z-10"
+        initial={{ y: -50, opacity: 0 }} // Start off-screen and transparent
+        animate={{ y: 0, opacity: 1 }} // Animate to original position and full opacity
+        transition={{ duration: 0.5 }} // Transition duration for form entry
+      >
         <h2 className="text-3xl font-bold text-center text-[#1F2B6C] mb-4">
           Doctor Registration
         </h2>
@@ -207,8 +218,8 @@ const Register = () => {
             login here.
           </Link>
         </p>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

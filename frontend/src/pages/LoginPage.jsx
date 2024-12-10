@@ -9,10 +9,12 @@ import { toast } from "react-toastify";
 import { jwtDecode } from "jwt-decode";
 import { UPDATE_ROLE } from "../redux/slices/user";
 import { useDispatch } from "react-redux";
+import { motion } from "framer-motion"; // Import motion for animations
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const onFinish = async (values) => {
     try {
       const url = `${configuration.API_BASE_URL}/api/v1/user/login`;
@@ -28,7 +30,7 @@ const Login = () => {
         dispatch(UPDATE_ROLE(role));
 
         // Show success toast with a timeout before navigation
-        toast.success("login successful"); // Show success toast immediately
+        toast.success("Login successful"); // Show success toast immediately
 
         setTimeout(() => {
           // Navigate based on user role after the toast is shown
@@ -46,15 +48,21 @@ const Login = () => {
               navigate("/");
               break;
           }
-        }, 1000); // Delay navigation by 2000 milliseconds (2 seconds)
+        }, 1000); // Delay navigation by 1000 milliseconds (1 second)
       }
     } catch (error) {
       console.error(error);
       toast.error("Invalid email or password"); // Show error toast instead of alert
     }
   };
+
   return (
-    <div className="flex items-center justify-end pr-24 min-h-screen p-4">
+    <motion.div
+      className="flex items-center justify-center min-h-screen p-4"
+      initial={{ opacity: 0 }} // Initial opacity for fade-in effect
+      animate={{ opacity: 1 }} // Animate to full opacity
+      transition={{ duration: 0.5 }} // Transition duration
+    >
       <div
         className="absolute inset-0 bg-cover bg-center brightness-75"
         style={{
@@ -63,16 +71,21 @@ const Login = () => {
           backgroundRepeat: "no-repeat",
           height: "100%",
           width: "100%",
-          filter: `brightness(${50}%)`,
+          filter: `brightness(50%)`,
         }}
       ></div>
-      <div className="w-full max-w-md p-8 rounded-lg shadow-md text-black backdrop-brightness-105 border bg-red-50 ">
-        <h2 className="text-4xl font-bold text-center text-black brightness-100 mb-4">
+      <motion.div
+        className="w-full max-w-md p-8 rounded-lg shadow-md text-black backdrop-brightness-105 border bg-red-50"
+        initial={{ y: -50, opacity: 0 }} // Start off-screen and transparent
+        animate={{ y: 0, opacity: 1 }} // Animate to original position and full opacity
+        transition={{ duration: 0.5 }} // Transition duration for form entry
+      >
+        <h2 className="text-3xl md:text-4xl font-bold text-center text-black brightness-100 mb-4">
           Login
         </h2>
         <Form layout="vertical" onFinish={onFinish}>
           <Form.Item
-            label={<span className="custom-label  ml-1">Email</span>}
+            label={<span className="custom-label ml-1">Email</span>}
             name="email"
             rules={[
               {
@@ -85,8 +98,7 @@ const Login = () => {
             <Input
               placeholder="Enter your email"
               prefix={<FaUser />}
-              className="h-10  placeholder-white  focus:border-transparent focus:ring-0"
-              paddingXS
+              className="h-10 placeholder-white focus:border-transparent focus:ring-0"
               style={{
                 backgroundColor: "transparent", // Ensure background is transparent
                 boxShadow: "none", // Remove any box shadow if present
@@ -101,17 +113,17 @@ const Login = () => {
             <Input.Password
               placeholder="Enter your password"
               prefix={<FaLock />}
-              className="h-10  placeholder-white bg-transparent  focus:border-transparent focus:ring-0"
+              className="h-10 placeholder-white bg-transparent focus:border-transparent focus:ring-0"
               style={{
                 backgroundColor: "transparent", // Ensure background is transparent
                 boxShadow: "none", // Remove any box shadow if present
               }}
             />
           </Form.Item>
-          <div className="flex justify-between mb-4">
+          <div className="flex flex-col md:flex-row justify-between mb-4">
             <Link
               to="/forgot-password"
-              className="text-purple-600 hover:underline"
+              className="text-purple-600 hover:underline mb-2 md:mb-0"
             >
               Forgot Password?
             </Link>
@@ -123,7 +135,7 @@ const Login = () => {
             <Button
               type="primary"
               htmlType="submit"
-              className="w-full bg-[#1F2B6C] mt-6 py-5 text-base "
+              className="w-full bg-[#1F2B6C] mt-6 py-5 text-base"
             >
               Login
             </Button>
@@ -136,8 +148,8 @@ const Login = () => {
             Sign Up
           </Link>
         </p>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

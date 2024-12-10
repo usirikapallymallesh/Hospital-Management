@@ -6,7 +6,7 @@ const DefaultLayout = ({ children }) => {
   return (
     <>
       <Header />
-      <main>{children}</main>
+      <main className="overflow-hidden">{children}</main>
       <Footer />
     </>
   );

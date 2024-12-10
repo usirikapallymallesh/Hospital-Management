@@ -7,6 +7,7 @@ import {
 } from "@ant-design/icons";
 import { NavLink, useNavigate } from "react-router-dom";
 import { FaFileAlt } from "react-icons/fa";
+import { motion } from "framer-motion"; // Import motion for animations
 
 const { Sider } = Layout;
 
@@ -21,61 +22,41 @@ const AdminSidebar = ({ selectedMenu, setSelectedMenu }) => {
         </h1>
       </div>
       <section className="flex flex-col text-white px-4 gap-4 text-lg">
-        <NavLink
-          to={"/admin"}
-          className={({ isActive }) =>
-            `flex items-center p-2 rounded-sm transition duration-200 ${
-              isActive ? "bg-blue-600" : "hover:bg-blue-500"
-            }`
-          }
-        >
-          <BarChartOutlined className="mr-2" />
-          Dashboard
-        </NavLink>
-        <NavLink
-          to={"/admin/manage-patients"}
-          className={({ isActive }) =>
-            `flex items-center p-2 rounded-sm transition duration-200 ${
-              isActive ? "bg-blue-600" : "hover:bg-blue-500"
-            }`
-          }
-        >
-          <UserAddOutlined className="mr-2" />
-          Patients
-        </NavLink>
-        <NavLink
-          to={"/admin/manage-doctors"}
-          className={({ isActive }) =>
-            `flex items-center p-2 rounded-sm transition duration-200 ${
-              isActive ? "bg-blue-600" : "hover:bg-blue-500"
-            }`
-          }
-        >
-          <UserAddOutlined className="mr-2" />
-          Doctors
-        </NavLink>
-        <NavLink
-          to={"/admin/reports"}
-          className={({ isActive }) =>
-            `flex items-center p-2 rounded-sm transition duration-200 ${
-              isActive ? "bg-blue-600" : "hover:bg-blue-500"
-            }`
-          }
-        >
-          <FaFileAlt className="mr-2" />
-          Reports
-        </NavLink>
-        <NavLink
-          to={"/admin/profile"}
-          className={({ isActive }) =>
-            `flex items-center p-2 rounded-sm transition duration-200 ${
-              isActive ? "bg-blue-600" : "hover:bg-blue-500"
-            }`
-          }
-        >
-          <UserOutlined className="mr-2" />
-          Profile
-        </NavLink>
+        {[
+          { to: "/admin", icon: <BarChartOutlined />, label: "Dashboard" },
+          {
+            to: "/admin/manage-patients",
+            icon: <UserAddOutlined />,
+            label: "Patients",
+          },
+          {
+            to: "/admin/manage-doctors",
+            icon: <UserAddOutlined />,
+            label: "Doctors",
+          },
+          { to: "/admin/reports", icon: <FaFileAlt />, label: "Reports" },
+          { to: "/admin/profile", icon: <UserOutlined />, label: "Profile" },
+        ].map(({ to, icon, label }) => (
+          <motion.div
+            key={to}
+            initial={{ opacity: 0, x: -20 }} // Initial state for animation
+            animate={{ opacity: 1, x: 0 }} // Animate to full opacity and position
+            transition={{ duration: 0.3 }} // Transition duration
+          >
+            <NavLink
+              to={to}
+              className={({ isActive }) =>
+                `flex items-center p-2 rounded-sm transition duration-200 ${
+                  isActive ? "bg-blue-600" : "hover:bg-blue-500"
+                }`
+              }
+              onClick={() => setSelectedMenu(label)} // Update selected menu if needed
+            >
+              {icon}
+              {label}
+            </NavLink>
+          </motion.div>
+        ))}
       </section>
 
       <div className="text-white text-sm p-4 text-center mt-auto">
