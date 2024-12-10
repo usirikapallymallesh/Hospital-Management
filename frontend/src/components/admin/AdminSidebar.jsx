@@ -50,7 +50,6 @@ const AdminSidebar = ({ selectedMenu, setSelectedMenu }) => {
                   isActive ? "bg-blue-600" : "hover:bg-blue-500"
                 }`
               }
-              onClick={() => setSelectedMenu(label)} // Update selected menu if needed
             >
               {icon}
               {label}

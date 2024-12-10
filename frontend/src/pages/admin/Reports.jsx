@@ -1,9 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import AdminHeader from "../../components/admin/AdminHeader";
 import AdminSidebar from "../../components/admin/AdminSidebar";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Reports = () => {
   // Sample data for complaints including "Problem" and "Doctor Name" fields
+  const navigate = useNavigate(); 
+  
+  const role = useSelector((state) => state.user.role); // Assuming auth.user is a Redux state
+  useEffect(() => {
+    if (role !== "ADMIN") {
+      navigate("/login");
+    }
+  }, []);
   const complaintData = [
     {
       id: 1,

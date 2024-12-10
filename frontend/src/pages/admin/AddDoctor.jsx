@@ -1,14 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Layout, Card, Button, Input, Form, Upload, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import AdminSidebar from "../../components/admin/AdminSidebar";
 import AdminHeader from "../../components/admin/AdminHeader";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const { Content } = Layout;
 
 const AddDoctor = () => {
   const [form] = Form.useForm();
   const [imageUrl, setImageUrl] = useState(null);
+  const navigate = useNavigate();
+
+  const role = useSelector((state) => state.user.role); // Assuming auth.user is a Redux state
+  useEffect(() => {
+    if (role !== "ADMIN") {
+      navigate("/login");
+    }
+  }, []);
 
   const handleSubmit = (values) => {
     console.log("New Doctor Data:", values);

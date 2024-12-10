@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Layout,
   Card,
@@ -12,6 +12,7 @@ import {
 import { UserOutlined, UploadOutlined } from "@ant-design/icons";
 import DoctorSidebar from "../../components/doctor/DoctorSidebar";
 import DoctorHeader from "../../components/doctor/DoctorHeader";
+import { useSelector } from "react-redux";
 
 const { Content } = Layout;
 
@@ -19,6 +20,12 @@ const DoctorProfile = () => {
   const [form] = Form.useForm();
   const [isEditing, setIsEditing] = useState(true);
   const [imageUrl, setImageUrl] = useState(null);
+  const role = useSelector((state) => state.user.role);
+  useEffect(() => {
+    if (role !== "DOCTOR") {
+      navigate("/login");
+    }
+  }, []);
 
   // Sample initial values (you can replace these with actual data)
   const initialValues = {

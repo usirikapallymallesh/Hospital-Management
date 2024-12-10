@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Table, Select } from "antd";
 import { useNavigate } from "react-router-dom";
 import DoctorSidebar from "../../components/doctor/DoctorSidebar";
 import DoctorHeader from "../../components/doctor/DoctorHeader";
+import { useSelector } from "react-redux";
 
 const { Option } = Select;
 
@@ -30,6 +31,12 @@ const Patients = () => {
   ]);
 
   const navigate = useNavigate(); // Initialize navigate for navigation
+  const role = useSelector((state) => state.user.role);
+  useEffect(() => {
+    if (role !== "DOCTOR") {
+      navigate("/login");
+    }
+  }, []);
 
   const handleStatusChange = (value, patientId) => {
     setPatients(

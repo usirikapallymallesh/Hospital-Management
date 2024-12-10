@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Table, Select } from "antd";
 import { useNavigate } from "react-router-dom";
 import AdminSidebar from "../../components/admin/AdminSidebar";
 import AdminHeader from "../../components/admin/AdminHeader";
+import { useSelector } from "react-redux";
 
 const { Option } = Select;
 
@@ -31,6 +32,12 @@ const ManagePatients = () => {
 
   const navigate = useNavigate(); // Initialize navigate for navigation
 
+  const role = useSelector((state) => state.user.role); // Assuming auth.user is a Redux state
+  useEffect(() => {
+    if (role !== "ADMIN") {
+      navigate("/login");
+    }
+  }, []);
   const handleStatusChange = (value, patientId) => {
     setPatients(
       patients.map((patient) =>

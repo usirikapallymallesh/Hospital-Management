@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Layout,
   Card,
@@ -12,6 +12,8 @@ import {
 import { UserOutlined, UploadOutlined } from "@ant-design/icons";
 import AdminSidebar from "../../components/admin/AdminSidebar";
 import AdminHeader from "../../components/admin/AdminHeader";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const { Content } = Layout;
 
@@ -19,6 +21,13 @@ const AdminProfile = () => {
   const [form] = Form.useForm();
   const [isEditing, setIsEditing] = useState(true);
   const [imageUrl, setImageUrl] = useState(null);
+  const navigate =useNavigate();
+  const role = useSelector((state) => state.user.role); // Assuming auth.user is a Redux state
+  useEffect(() => {
+    if (role !== "ADMIN") {
+      navigate("/login");
+    }
+  }, []);
 
   // Sample initial values (you can replace these with actual data)
   const initialValues = {

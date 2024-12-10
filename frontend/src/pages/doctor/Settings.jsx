@@ -1,12 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaUser } from "react-icons/fa";
 import { Form, Input, DatePicker, Upload, Button } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import moment from "moment"; // Import moment for date handling
 import Sidebar from "./Sidebar"; // Importing the Sidebar component
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const EditUser = ({ user, onSave }) => {
   const [form] = Form.useForm();
+  const navigate=useNavigate();
+  const role = useSelector((state) => state.user.role); // Assuming auth.user is a Redux state
+  useEffect(() => {
+    if (role !== "ADMIN") {
+      navigate("/login");
+    }
+  }, []);
 
   const handleSubmit = (values) => {
     // Include photo in values if needed

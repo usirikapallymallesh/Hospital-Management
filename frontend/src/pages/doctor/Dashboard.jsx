@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Bar, Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -32,6 +32,11 @@ ChartJS.register(
 const Dashboard = () => {
   const navigate = useNavigate();
   const role = useSelector((state) => state.user.role);
+  useEffect(() => {
+    if (role !== "DOCTOR") {
+      navigate("/login");
+    }
+  }, []);
 
   const barData = {
     labels: ["January", "February", "March", "April", "May", "June"],

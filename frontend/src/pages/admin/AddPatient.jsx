@@ -1,13 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Layout, Card, Button, Input, Form, message } from "antd";
 import AdminSidebar from "../../components/admin/AdminSidebar";
 import AdminHeader from "../../components/admin/AdminHeader";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const { Content } = Layout;
 
 const AddPatient = () => {
   const [form] = Form.useForm();
+  const navigate = useNavigate();
 
+  const role = useSelector((state) => state.user.role); // Assuming auth.user is a Redux state
+  useEffect(() => {
+    if (role !== "ADMIN") {
+      navigate("/login");
+    }
+  }, []);
   const handleSubmit = (values) => {
     console.log("New Patient Data:", values);
     // Here you can send the patient data to your backend

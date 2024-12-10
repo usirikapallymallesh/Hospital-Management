@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { Form, Input, Button, Upload, message, Select, Layout } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 // import AdminHeader from './AdminHeader'; // Import the new Header component
 // import AdminSidebar from './AdminSidebar'; // Import the new Sidebar component
 import AdminHeader from "../../components/admin/AdminHeader";
 import AdminSidebar from "../../components/admin/AdminSidebar";
+import { useSelector } from "react-redux";
 
 const { Option } = Select;
 const { Content } = Layout;
@@ -13,7 +14,13 @@ const { Content } = Layout;
 const EditPatient = () => {
   const { id } = useParams(); // Get the patient's ID from the URL parameters
   const [patient, setPatient] = useState(null);
-
+  const navigate = useNavigate(); // Assuming useNavigate hook is available from react-router-dom
+  const role = useSelector((state) => state.user.role); // Assuming auth.user is a Redux state
+  useEffect(() => {
+    if (role !== "ADMIN") {
+      navigate("/login");
+    }
+  }, []);
   // Sample patient data (you would fetch this from your data source)
   const patientsData = [
     {

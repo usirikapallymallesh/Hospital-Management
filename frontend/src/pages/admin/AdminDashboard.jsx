@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Layout, Card, Row, Col, Table } from "antd";
 import { Bar, Line } from "react-chartjs-2";
 import { Chart, registerables } from "chart.js";
@@ -46,6 +46,11 @@ const AdminDashboard = () => {
   const navigate = useNavigate();
 
   const role = useSelector((state) => state.user.role); // Assuming auth.user is a Redux state
+  useEffect(() => {
+    if (role !== "ADMIN") {
+      navigate("/login");
+    }
+  }, []);
 
   return (
     <Layout className="flex">

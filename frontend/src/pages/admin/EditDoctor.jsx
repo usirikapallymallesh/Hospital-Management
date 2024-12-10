@@ -1,15 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Form, Input, Button, Upload, message, Select } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import AdminSidebar from "../../components/admin/AdminSidebar";
 import AdminHeader from "../../components/admin/AdminHeader";
+import { useSelector } from "react-redux";
 
 const { Option } = Select;
 
 const EditDoctor = () => {
   const { name } = useParams(); // Get the doctor's name from the URL parameters
   const [doctor, setDoctor] = useState(null);
+  const navigate =useNavigate();
+  const role = useSelector((state) => state.user.role); // Assuming auth.user is a Redux state
+  useEffect(() => {
+    if (role !== "ADMIN") {
+      navigate("/login");
+    }
+  }, []);
 
   // Sample doctor data (you would fetch this from your data source)
   const doctorsData = [

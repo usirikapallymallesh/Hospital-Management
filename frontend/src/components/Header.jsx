@@ -17,9 +17,9 @@ const Header = () => {
       const currentScrollY = window.scrollY;
 
       // Check if the scroll position is below or above the threshold
-      if (currentScrollY > 250 && prevScrollY.current <= 250) {
+      if (currentScrollY > 250 && prevScrollY.current < 250) {
         setShowHeader(false); // Hide header when scrolling down past threshold
-      } else if (currentScrollY <= 250 && prevScrollY.current > 250) {
+      } else if (currentScrollY <= 251 && prevScrollY.current >= 251) {
         setShowHeader(true); // Show header when scrolling up above threshold
       }
 

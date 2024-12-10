@@ -26,6 +26,7 @@ const Login = () => {
 
         // Decode token using jwt-decode package
         const payload = jwtDecode(token);
+        console.log(payload);
         const role = payload.role;
         dispatch(UPDATE_ROLE(role));
 
