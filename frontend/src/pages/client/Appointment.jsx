@@ -4,7 +4,7 @@ import AllPagesHero from "../../components/AllPagesHero";
 import BookAppointment from "../../components/appointment/BookAppointment";
 import MapCard from "../../components/contact/MapCard";
 import Contact from "../../components/home/Contact";
-
+import BgImg from "../../assets/images/doctors.png";
 const Appointment = () => {
   return (
     <DefaultLayout>
@@ -12,7 +12,7 @@ const Appointment = () => {
         <AllPagesHero
           title="Book An Appointment"
           path="Home / Appointment"
-          ImgUrl="https://www.istockphoto.com/resources/images/FreePhotos/Free-Photo-740x492-1744915333.jpg"
+          ImgUrl={BgImg}
         />
         <BookAppointment />
         <MapCard />

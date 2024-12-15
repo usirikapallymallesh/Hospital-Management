@@ -59,7 +59,7 @@ const News = () => {
         {[...Array(Math.ceil(newsArticles.length / 4))].map((_, slideIndex) => (
           <div
             key={slideIndex}
-            className="grid grid-cols-2 grid-rows-2 bg-gray-50 "
+            className="grid grid-cols-2 grid-rows-2 bg-gray-50 py-4"
           >
             <div className="grid grid-cols-2 grid-rows-2 gap-3">
               {newsArticles

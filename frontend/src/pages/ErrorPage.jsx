@@ -1,13 +1,29 @@
 import React from "react";
+import { motion } from "framer-motion"; // Import motion from framer-motion
 import ErrorPageBg from "../assets/images/HoerrorBg.jpg";
 
 const ErrorPage = () => {
+  // Define animation variants
+  const containerVariants = {
+    hidden: { opacity: 0, y: -50 },
+    visible: { opacity: 1, y: 0 },
+  };
+
   return (
-    <div
+    <motion.div
       className="flex items-center justify-center min-h-screen bg-cover bg-center bg-no-repeat"
       style={{ backgroundImage: `url(${ErrorPageBg})` }}
+      initial="hidden"
+      animate="visible"
+      variants={containerVariants}
+      transition={{ duration: 0.5 }} // Animation duration
     >
-      <div className="max-w-lg mx-auto text-center bg-white bg-opacity-90 p-10 rounded-lg shadow-lg transform transition-all duration-300 ">
+      <motion.div
+        className="max-w-lg mx-auto text-center bg-white bg-opacity-90 p-10 rounded-lg shadow-lg transform transition-all duration-300"
+        initial={{ scale: 0.8 }} // Initial scale for entrance animation
+        animate={{ scale: 1 }} // Scale to normal size on entrance
+        transition={{ duration: 0.3 }} // Duration of the scaling effect
+      >
         <div className="text-9xl font-bold text-[#1F2B6C] mb-4 drop-shadow-md">
           404
         </div>
@@ -24,8 +40,8 @@ const ErrorPage = () => {
         >
           Go Back Home
         </a>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

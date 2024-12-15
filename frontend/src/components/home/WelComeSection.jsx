@@ -2,12 +2,12 @@ import React from "react";
 import { IoCalendarNumberSharp } from "react-icons/io5";
 import { FaMoneyBillTrendUp } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-import HomeBg from "../../assets/images/homeBg.png";
+import HomeBg from "../../assets/images/doctors.png";
 import { motion } from "framer-motion";
 
 const WelComeSection = () => {
   return (
-    <div className="relative bg-gray-100 py-10 px-5 md:px-10 lg:px-20">
+    <div className="relative bg-gray-100  py-10 px-5 md:px-10 lg:px-20">
       {/* Action Buttons */}
       <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex gap-4 md:gap-10 w-full justify-center text-xl">
         <motion.div
@@ -64,21 +64,23 @@ const WelComeSection = () => {
         </motion.h1>
 
         <motion.p
-          className="text-md md:text-lg mb-6 work-sans-color max-w-xl mx-auto"
+          className="text-md md:text-lg mb-6 work-sans-color max-w-xl mx-auto font-serif "
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-          placerat scelerisque tortor ornare ornare. Convallis felis vitae
-          tortor augue. Velit nascetur proin massa in. Consequat faucibus
-          porttitor enim et.
+          Welcome to our hospital, a great place to receive care. Our dedicated
+          team of healthcare professionals is committed to providing you with
+          compassionate, high-quality medical services. We prioritize your
+          health and well-being, ensuring a comfortable environment for patients
+          and families alike. Thank you for choosing us; we are here to support
+          you on your journey to recovery.
         </motion.p>
 
         <Link
           to="/book"
-          className="bg-blue-500 text-white font-semibold py-3 px-6 rounded-lg shadow-lg transition duration-300 hover:bg-blue-600"
+          className="bg-blue-500 text-white font-semibold py-3 px-8 rounded-md shadow-lg transition duration-300 hover:bg-blue-600"
         >
           Learn More
         </Link>

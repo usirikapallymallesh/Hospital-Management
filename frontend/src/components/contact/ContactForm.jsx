@@ -16,13 +16,13 @@ const ContactForm = () => {
           </h1>
         </div>
         {/* Form Section */}
-        <div className="hover:bg-blue-200 rounded-lg shadow-lg p-8  md:mr-4 md:ml-14 bg-blue-900">
+        <div className=" rounded-lg shadow-lg p-8  md:mr-4 md:ml-14 bg-blue-900">
           <form action="">
             <div className="md:w-full mb-4 grid grid-cols-10 sm:grid-cols-2 gap-4">
               <input
                 type="text"
                 placeholder="Name"
-                className="border rounded w-full py-2 px-3"
+                className="border rounded w-full py-2 px-3 outline-none"
                 required
               />
               {/* </div> */}
@@ -30,7 +30,7 @@ const ContactForm = () => {
               <input
                 type="email"
                 placeholder="Email"
-                className="border rounded w-full py-2 px-3"
+                className="border rounded w-full py-2 px-3 outline-none"
                 required
               />
             </div>
@@ -38,14 +38,14 @@ const ContactForm = () => {
               <input
                 type="text"
                 placeholder="Subject"
-                className="border rounded w-full py-2 px-3"
+                className="border rounded w-full py-2 px-3 outline-none"
                 required
               />
             </div>
             <div className="mb-1">
               <textarea
                 placeholder="Message"
-                className="border rounded w-full py-2 px-3 h-40"
+                className="border rounded w-full py-2 px-3 h-40 outline-none"
                 rows="4"
                 required
               ></textarea>

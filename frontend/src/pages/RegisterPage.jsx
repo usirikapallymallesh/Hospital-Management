@@ -1,42 +1,49 @@
-import React, { useRef } from "react";
+import React from "react";
 import { Form, Input, Button, Select, DatePicker } from "antd";
-import { FaUser, FaLock, FaEnvelope, FaPhone } from "react-icons/fa"; // Import icons from React Icons
-import { CalendarOutlined } from "@ant-design/icons"; // Import Calendar icon from Ant Design
+import { FaUser, FaLock, FaEnvelope, FaPhone } from "react-icons/fa";
+import { CalendarOutlined } from "@ant-design/icons";
 import moment from "moment";
 import bgImage from "../assets/images/loginBg1.jpg";
-import { Link } from "react-router-dom"; // Import Link for navigation
-import { motion } from "framer-motion"; // Import motion for animations
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import axios from "axios";
+import configuration from "./../config.js";
+import { toast } from "react-toastify";
 
 const { Option } = Select;
 
 const Register = () => {
-  const dobRef = useRef(); // Initialize the ref for the DatePicker
-
-  const onFinish = (values) => {
-    // Get the formatted date from the DatePicker
-    const formattedDate = dobRef.current
-      ? moment(dobRef.current.value).format("YYYY-MM-DD")
-      : null;
-
-    // Add the formatted date to the values object
-    values = {
+  const onFinish = async (values) => {
+    const formattedValues = {
       ...values,
-      dateOfBirth: formattedDate,
+      dateOfBirth: values.dob ? moment(values.dob).format("YYYY-MM-DD") : null,
     };
 
-    console.log("Received values:", values);
-    // Handle registration logic here
+    try {
+      const response = await axios.post(
+        `${configuration.API_BASE_URL}/api/v1/user/patient/register`,
+        formattedValues
+      );
+      toast.success("Registration successful!");
+      setTimeout(() => {
+        window.location.href = "/login";
+      }, 2000);
+    } catch (error) {
+      const errorMessage =
+        error.response?.data?.message || "Something went wrong.";
+      toast.error(errorMessage);
+    }
   };
 
   return (
     <motion.div
       className="flex items-center justify-center min-h-screen p-4"
-      initial={{ opacity: 0 }} // Initial opacity for fade-in effect
-      animate={{ opacity: 1 }} // Animate to full opacity
-      transition={{ duration: 0.5 }} // Transition duration
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
     >
       <div
-        className="absolute inset-0 bg-cover bg-center brightness-75 "
+        className="absolute inset-0 bg-cover bg-center brightness-75"
         style={{
           backgroundImage: `url(${bgImage})`,
           backgroundSize: "cover",
@@ -48,9 +55,9 @@ const Register = () => {
       ></div>
       <motion.div
         className="w-full max-w-screen-md p-8 bg-red-50 rounded-lg shadow-md text-white z-10"
-        initial={{ y: -50, opacity: 0 }} // Start off-screen and transparent
-        animate={{ y: 0, opacity: 1 }} // Animate to original position and full opacity
-        transition={{ duration: 0.5 }} // Transition duration for form entry
+        initial={{ y: -50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5 }}
       >
         <h2 className="text-3xl font-bold text-center text-[#1F2B6C] mb-4">
           Doctor Registration
@@ -63,55 +70,60 @@ const Register = () => {
             <Form.Item
               label="First Name"
               name="firstName"
+              validateFirst
               rules={[
                 { required: true, message: "Please enter your first name!" },
+                { min: 4, message: "Must be at least 4 characters!" },
+                { max: 20, message: "Cannot exceed 20 characters!" },
+                { whitespace: true, message: "Cannot be empty!" },
+                { pattern: /^[A-Za-z]+$/, message: "Letters only!" },
               ]}
             >
               <Input
                 placeholder="Enter your first name"
                 prefix={<FaUser />}
                 className="h-12 text-black placeholder-gray-400 bg-white border border-gray-300 focus:border-purple-500"
-                style={{ boxShadow: "none" }}
               />
             </Form.Item>
+
             <Form.Item
               label="Last Name"
               name="lastName"
+              validateFirst
               rules={[
                 { required: true, message: "Please enter your last name!" },
+                { min: 4, message: "Must be at least 4 characters!" },
+                { max: 20, message: "Cannot exceed 20 characters!" },
+                { whitespace: true, message: "Cannot be empty!" },
+                { pattern: /^[A-Za-z]+$/, message: "Letters only!" },
               ]}
             >
               <Input
                 placeholder="Enter your last name"
                 prefix={<FaUser />}
                 className="h-12 text-black placeholder-gray-400 bg-white border border-gray-300 focus:border-purple-500"
-                style={{ boxShadow: "none" }}
               />
             </Form.Item>
+
             <Form.Item
               label="Email"
               name="email"
+              validateFirst
               rules={[
-                {
-                  required: true,
-                  type: "email",
-                  message: "Please enter a valid email!",
-                },
+                { required: true, type: "email", message: "Enter a valid email!" },
               ]}
             >
               <Input
                 placeholder="Enter your email"
                 prefix={<FaEnvelope />}
                 className="h-12 text-black placeholder-gray-400 bg-white border border-gray-300 focus:border-purple-500"
-                style={{ boxShadow: "none" }}
               />
             </Form.Item>
+
             <Form.Item
               label="Gender"
               name="gender"
-              rules={[
-                { required: true, message: "Please select your gender!" },
-              ]}
+              rules={[{ required: true, message: "Please select your gender!" }]}
             >
               <Select
                 placeholder="Select your gender"
@@ -122,70 +134,71 @@ const Register = () => {
                 <Option value="O">Other</Option>
               </Select>
             </Form.Item>
+
             <Form.Item
               label="Phone Number"
               name="phoneNumber"
+              validateFirst
               rules={[
-                { required: true, message: "Please enter your phone number!" },
+                { required: true, message: "Enter your phone number!" },
+                { min: 8, message: "Must be at least 8 characters!" },
+                { max: 20, message: "Cannot exceed 20 characters!" },
+                { pattern: /^[0-9]+$/, message: "Numbers only!" },
               ]}
             >
               <Input
                 placeholder="Enter your phone number"
                 prefix={<FaPhone />}
                 className="h-12 text-black placeholder-gray-400 bg-white border border-gray-300 focus:border-purple-500"
-                style={{ boxShadow: "none" }}
               />
             </Form.Item>
+
             <Form.Item
               label="Date of Birth"
               name="dob"
-              rules={[
-                {
-                  required: true,
-                  message: "Please select your date of birth!",
-                },
-              ]}
+              rules={[{ required: true, message: "Select your date of birth!" }]}
             >
               <DatePicker
-                format={"YYYY-MM-DD"}
+                format="YYYY-MM-DD"
                 placeholder="Select your date of birth"
                 style={{ width: "100%" }}
                 suffixIcon={<CalendarOutlined />}
-                ref={dobRef} // Attach ref to DatePicker
                 disabledDate={(current) =>
                   current && current > moment().endOf("day")
                 }
-                className="bg-white text-black" // Customize DatePicker background and text color
+                className="bg-white text-black"
               />
             </Form.Item>
+
             <Form.Item
               label="Password"
               name="password"
+              validateFirst
               rules={[
-                { required: true, message: "Please enter your password!" },
+                { required: true, message: "Enter your password!" },
+                { min: 8, message: "Must be at least 8 characters!" },
               ]}
             >
               <Input.Password
                 placeholder="Enter your password"
                 prefix={<FaLock />}
                 className="h-12 text-black placeholder-gray-400 bg-white border border-gray-300 focus:border-purple-500"
-                style={{ boxShadow: "none" }}
               />
             </Form.Item>
+
             <Form.Item
               label="Confirm Password"
               name="confirmPassword"
               dependencies={["password"]}
+              validateFirst
               rules={[
-                { required: true, message: "Please confirm your password!" },
+                { required: true, message: "Confirm your password!" },
                 ({ getFieldValue }) => ({
                   validator(_, value) {
                     if (!value || getFieldValue("password") === value) {
                       return Promise.resolve();
                     }
-                    return Promise.reject(
-                      new Error("The two passwords do not match!")
-                    );
+                    return Promise.reject(new Error("Passwords do not match!"));
                   },
                 }),
               ]}
@@ -194,7 +207,6 @@ const Register = () => {
                 placeholder="Confirm your password"
                 prefix={<FaLock />}
                 className="h-12 text-black placeholder-gray-400 bg-white border border-gray-300 focus:border-purple-500"
-                style={{ boxShadow: "none" }}
               />
             </Form.Item>
           </div>
@@ -210,12 +222,10 @@ const Register = () => {
           </Form.Item>
         </Form>
 
-        {/* Login Prompt */}
         <p className="text-center text-gray-400 mt-4">
-          If you are already registered, please
+          Already registered?{" "}
           <Link to="/login" className="text-purple-700 hover:underline">
-            {" "}
-            login here.
+            Login here.
           </Link>
         </p>
       </motion.div>

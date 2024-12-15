@@ -17,7 +17,7 @@ const BookAppointment = () => {
         filter: "revert-layer",
       }}
     >
-      <div className="absolute inset-0 bg-white opacity-70 brightness-90"></div>
+      <div className="absolute inset-0 bg-blue-100 opacity-80 brightness-90"></div>
       <div className="relative z-10 flex flex-col md:flex-row items-center justify-center h-full py-10 px-5 md:px-10 lg:px-20 text-white">
         {/* Left Side Text */}
         <div className="md:w-1/2 mb-8 md:mb-0">

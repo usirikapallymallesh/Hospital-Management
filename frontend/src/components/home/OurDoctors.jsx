@@ -2,9 +2,11 @@ import React, { useRef } from "react";
 import { Carousel } from "antd";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa"; // Importing icons for navigation
 import { FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa"; // Import social media icons
+import { useNavigate } from "react-router-dom";
 
 const OurDoctors = () => {
   const carouselRef = useRef(null); // Create a reference for the carousel
+  const navigate = useNavigate();
 
   const doctors = [
     {
@@ -55,7 +57,9 @@ const OurDoctors = () => {
         Our Doctors
       </h1>
 
-      <Carousel ref={carouselRef} dots={false} autoplay>
+      <Carousel ref={carouselRef} dots={false} autoplay autoplaySpeed={3000}>
+        {" "}
+        {/* 3000 ms delay */}
         {doctors.map((doctor, index) => (
           <div key={index} className="flex justify-center">
             <div className="flex gap-10 justify-center">
@@ -68,12 +72,12 @@ const OurDoctors = () => {
                   <img
                     src={doc.image}
                     alt={doc.name}
-                    className="w-full h-72  mx-auto mb-4"
+                    className="w-full h-72 mx-auto mb-4"
                   />
-                  <h4 className="text-lg font-semibold">{doc.name}</h4>
-                  <p className="text-gray-600">{doc.specialty}</p>
+                  <h3 className="text-lg font-semibold">{doc.name}</h3>
+                  <p className="text-gray-600 py-1">{doc.specialty}</p>
                   {/* Social Media Icons */}
-                  <div className="flex justify-center mt-2">
+                  <div className="flex justify-center mt-2 text-2xl">
                     <a href="#" className="mx-2 text-blue-600">
                       <FaFacebook />
                     </a>
@@ -85,7 +89,7 @@ const OurDoctors = () => {
                     </a>
                   </div>
                   {/* View Profile Button */}
-                  <button className="mt-4 p-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                  <button className="mt-4 p-2 w-full rounded-b-md bg-[#1F2B6C]  text-white hover:bg-[#1F009E] "  onClick={()=>{navigate(`/doctor/${doc.name}`)}}>
                     View Profile
                   </button>
                 </div>

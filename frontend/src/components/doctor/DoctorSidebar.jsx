@@ -19,7 +19,10 @@ const DoctorSidebar = () => {
   return (
     <Sider className="bg-[#1F2B6C] sticky top-0 h-screen w-full md:w-1/5">
       <div className="logo text-white text-2xl p-4 py-6 font-bold text-center">
-        <h1 className="text-white text-2xl yeseva-one-regular uppercase font-semibold">
+        <h1
+          className="text-white text-2xl yeseva-one-regular uppercase font-semibold cursor-pointer "
+          onClick={() => navigate("/")}
+        >
           Med<span className="text-[#159EEC]">dical</span>
         </h1>
       </div>
